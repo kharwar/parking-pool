@@ -1,5 +1,8 @@
 image: maven:latest
 
+before_script: 
+  - cd ./com.parkingpool.backend/
+
 stages:
     - build
     - test
