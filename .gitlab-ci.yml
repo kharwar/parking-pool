@@ -1,0 +1,28 @@
+image: maven:latest
+
+stages:
+    - build
+    - test
+
+mvn-build: 
+    stage: build
+    tags:
+        - dalfcs_docker_kvm
+    script: 
+        - mvn clean install
+    artifacts:
+        paths:
+            - "./com.parkingpool.backend/target/*.jar"
+
+mvn-test:
+    stage: test
+    tags:
+        - dalfcs_docker_kvm
+    script:
+        - mvn clean test
+    artifacts:
+        paths:
+            - "./com.parkingpool.backend/target/surefire-reports/TEST-*.xml"
+        reports:
+            junit:
+                - "./com.parkingpool.backend/target/surefire-reports/TEST-*.xml"
