@@ -1,0 +1,27 @@
+
+n	java:S116"TRename this field "user_type" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üõ¿®þÿÿÿÿ
+h
+java:S3008
+"RRename this field "user_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Éˆ°¡
+G
+java:S1068",Remove this unused "password" private field.(œãë­úÿÿÿÿ
+f
+java:S1104"PMake name a static final constant or non-public and provide accessors if needed.(Ã¼ê‚
+l
+java:S1104	"QMake email a static final constant or non-public and provide accessors if needed.(¿ÿÒíÿÿÿÿÿ
+i
+java:S1104
+"SMake user_id a static final constant or non-public and provide accessors if needed.(Éˆ°¡
+p
+java:S1104"UMake user_type a static final constant or non-public and provide accessors if needed.(Üõ¿®þÿÿÿÿ
+n
+java:S1104"SMake address a static final constant or non-public and provide accessors if needed.(€ªµúÿÿÿÿÿ
+@
+java:S1444"*Make this "public static name" field final(Ã¼ê‚
+F
+java:S1444	"+Make this "public static email" field final(¿ÿÒíÿÿÿÿÿ
+C
+java:S1444
+"-Make this "public static user_id" field final(Éˆ°¡
+0
+java:S1220""Move this file to a named package.
