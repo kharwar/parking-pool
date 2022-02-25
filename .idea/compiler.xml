@@ -9,5 +9,8 @@
         <module name="com.parkingpool.backend" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="com.parkingpool.backend" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
