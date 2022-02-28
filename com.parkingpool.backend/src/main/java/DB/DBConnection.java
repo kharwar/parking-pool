@@ -10,7 +10,7 @@ public class DBConnection implements DBInterface
     private Connection connection = null;
     private static DBConnection dbConnection;
 
-    final String DB_URL = "jdbc:mysql://db-5308.cs.dal.ca:3306/";
+    final String DB_URL = "jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_2_DEVINT";
     final String USER="CSCI5308_2_DEVINT_USER";
     final String PASS="phoo3saezeeGoop2";
 
@@ -28,6 +28,7 @@ public class DBConnection implements DBInterface
     @Override
     public Connection getDBConnection() throws SQLException {
         clearDBConnection();
+//        Class.forName("com.mysql.jdbc.Driver");
         connection = DriverManager.getConnection(DB_URL, USER, PASS);
         return connection;
     }

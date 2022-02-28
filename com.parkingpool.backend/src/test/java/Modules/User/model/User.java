@@ -1,20 +1,18 @@
 package Modules.User.model;
 
 public class User {
-    public int user_id;
     public String name;
     public String email;
     public USER_TYPE role;
     public String address;
     private String password;
 
-    public User(String name, String email, USER_TYPE role, String address, String password, int user_id) {
+    public User(String name, String email, USER_TYPE role, String address, String password) {
         this.name = name;
         this.email = email;
         this.role = role;
         this.address = address;
         this.password = password;
-        this.user_id = user_id;
     }
 
     public String getName() {
