@@ -1,6 +1,7 @@
 image: maven:latest
 
-before_script: 
+before_script:
+  - mkdir com.parkingpool.backend
   - cd ./com.parkingpool.backend/
 
 stages:
