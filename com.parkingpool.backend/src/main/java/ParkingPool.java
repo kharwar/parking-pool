@@ -5,10 +5,7 @@ import Modules.User.UserView;
 import Modules.User.model.User;
 import Utils.Constants;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -19,11 +16,13 @@ public class ParkingPool {
 
         Connection conn=null;//use conn for connection
         Statement stmt=null;//use stmt for statement
+        PreparedStatement preparedStatement = null; //used for PreparedStatement
         DBInterface dbi = DBConnection.getInstance();
         Scanner sc= new Scanner(System.in);//use sc for scanner
         boolean IsLoggedIn=false;
         try {
             conn = dbi.getDBConnection();
+            Constants.setConnection(conn);
             stmt =  conn.createStatement();
             Constants.setStatement(stmt);
         } catch (SQLException e) {

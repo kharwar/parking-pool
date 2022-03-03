@@ -33,7 +33,7 @@ public class ParkingSlotView {
                 break;
             case ADMIN:
                 System.out.println("Admin menu accessed");
-                toContinue = false;
+                toContinue = true;
                 break;
             default:
                 System.out.println("User role not recognized");
