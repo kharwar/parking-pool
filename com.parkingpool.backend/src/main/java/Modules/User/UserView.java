@@ -1,8 +1,9 @@
 package Modules.User;
 
-
+import java.io.*;
 import Modules.User.controller.*;
 import Modules.User.model.User;
+import Utils.Constants;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,38 +22,39 @@ public class UserView{
         String password;
         SignUp su = new SignUp();
 
+
         Scanner sc= new Scanner(System.in);
-        System.out.print("Please enter your name: ");
+        Constants.printAndSpeak("Please enter your name: ");
         name=sc.nextLine();
-        System.out.print("Please enter your email: ");
+        Constants.printAndSpeak("Please enter your email: ");
         email=sc.nextLine();
-        System.out.println("Please enter 'c' for customer role, enter 'v' for vendor role : ");
+        Constants.printAndSpeak("Please enter 'c' for customer role, enter 'v' for vendor role : ");
         rl=sc.nextLine().charAt(0);
         while(rl!='v' && rl!='c')
         {
-            System.out.println("Please Enter valid input : 'c' for customer role, Enter 'v' for vendor role : ");
+            Constants.printAndSpeak("Please Enter valid input : 'c' for customer role, Enter 'v' for vendor role : ");
             rl=sc.nextLine().charAt(0);
         }
-        System.out.print("Please Enter your address: ");
+        Constants.printAndSpeak("Please Enter your address: ");
         address=sc.nextLine();
-        System.out.print("Please Enter your password: ");
+        Constants.printAndSpeak("Please Enter your password: ");
         password=sc.nextLine();
 
         if(su.checkIsUserExist(stmt,email,rl))
         {
-            System.out.println("Sorry, user already exist");
+            Constants.printAndSpeak("Sorry, user already exist");
             return false;
         }
         else
         {
            if(su.register(stmt,email,rl,name,password,address)!=1)
            {
-               System.out.println("Something went wrong, we can not sign you up");
+               Constants.printAndSpeak("Something went wrong, we can not sign you up");
                return false;
            }
         }
 
-        System.out.println("Thank you, for registration. Now you can log in to the system.");
+        Constants.printAndSpeak("Thank you, for registration. Now you can log in to the system.");
         return true;
 
 
@@ -64,15 +66,15 @@ public class UserView{
         char rl;
 
         Scanner sc= new Scanner(System.in);
-        System.out.print("\nPlease Enter your email: ");
+        Constants.printAndSpeak("\nPlease Enter your email: ");
         email=sc.nextLine();
-        System.out.print("Please Enter your password: ");
+        Constants.printAndSpeak("Please Enter your password: ");
         password=sc.nextLine();
-        System.out.print("Please Enter 'c' for customer role, Enter 'v' for vendor role, Enter 'a' for admin role : ");
+        Constants.printAndSpeak("Please Enter 'c' for customer role, Enter 'v' for vendor role, Enter 'a' for admin role : ");
         rl=sc.nextLine().charAt(0);
         while(rl!='v' && rl!='c' && rl!='a')
         {
-            System.out.println("Please Enter valid input : 'c' for customer role, Enter 'v' for vendor role , Enter 'a' for admin role : ");
+            Constants.printAndSpeak("Please Enter valid input : 'c' for customer role, Enter 'v' for vendor role , Enter 'a' for admin role : ");
             rl=sc.nextLine().charAt(0);
         }
 
@@ -87,12 +89,12 @@ public class UserView{
                 return true;
             }
             else{
-                System.out.println("incorrect credentials");
+                Constants.printAndSpeak("incorrect credentials");
             }
 
         }
         else{
-            System.out.println("User does not exist");
+            Constants.printAndSpeak("User does not exist");
         }
 
         return false;

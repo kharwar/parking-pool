@@ -5,8 +5,15 @@ import Modules.User.UserView;
 import Modules.User.model.User;
 import Utils.Constants;
 
+import javax.speech.AudioException;
+import javax.speech.Central;
+import javax.speech.EngineException;
+import javax.speech.*;
+import javax.speech.synthesis.SynthesizerModeDesc;
+
 import java.sql.*;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ParkingPool {
@@ -35,14 +42,14 @@ public class ParkingPool {
         UserView uv = new UserView();
 
         while(!IsLoggedIn) {
-            System.out.println("Please enter the numbers given below to perform the following action:\n1: SignUp\n2: Login");
-            System.out.print("Enter your command: ");
+            Constants.printAndSpeak("Please enter the numbers given below to perform the following action:\n1: SignUp\n2: Login");
+            Constants.printAndSpeak("Enter your command: ");
             int inputt = sc.nextInt();
             if(inputt==1) {
                 try {
                     uv.signUp(stmt);
                 } catch (SQLException e) {
-                    System.out.println("Something went wrong, can not sign you up");
+                    Constants.printAndSpeak("Something went wrong, can not sign you up");
                     e.printStackTrace();
                 }
             }
@@ -54,17 +61,17 @@ public class ParkingPool {
                         IsLoggedIn=true;
                     }
                 } catch (SQLException e) {
-                    System.out.println("Something went wrong, can not sign you in");
+                    Constants.printAndSpeak("Something went wrong, can not sign you in");
                     e.printStackTrace();
                 }
             }
             else{
-                System.out.println("Please select correct input");
+                Constants.printAndSpeak("Please select correct input");
             }
         }
 
         User user = uv.getUser();
-        System.out.println("\n ***** Welcome "+user.getName()+", to the ParkingPool *****\n");
+        Constants.printAndSpeak("\n  Welcome "+user.getName()+", to the ParkingPool \n");
 
         ParkingSlotView parkingSlotView = new ParkingSlotView(user);
         boolean toContinue = true;
@@ -72,12 +79,12 @@ public class ParkingPool {
             toContinue = parkingSlotView.displayParkingSlotMenu();
         }
 
-        System.out.println("Exiting ParkingPool!");
+        Constants.printAndSpeak("Exiting ParkingPool!");
         try {
             dbi.clearDBConnection();
         }catch (SQLException e)
         {
-            System.out.println("Can not close the connection");
+            Constants.printAndSpeak("Can not close the connection");
             e.printStackTrace();
         }
 
