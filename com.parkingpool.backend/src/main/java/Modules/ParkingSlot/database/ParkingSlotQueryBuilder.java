@@ -1,5 +1,7 @@
 package Modules.ParkingSlot.database;
 
+import Modules.ParkingSlot.model.ParkingSlot;
+
 public class ParkingSlotQueryBuilder implements ParkingSlotQueryBuilderDAO{
 
     private static ParkingSlotQueryBuilder parkingSlotQueryBuilder;
@@ -31,5 +33,15 @@ public class ParkingSlotQueryBuilder implements ParkingSlotQueryBuilderDAO{
                 hourly_rate+"','"+
                 is_on_street+"','"+
                 owner_user_id+"')";
+    }
+
+    @Override
+    public String FindAllParkingSlotsQueryBuilder() {
+        return "SELECT * from ParkingSlot";
+    }
+
+    @Override
+    public String DeleteParkingSlotQueryBuilder(int parkingSlotId, int userId) {
+        return "DELETE FROM ParkingSlot WHERE id="+parkingSlotId+" AND owner_user_id="+userId;
     }
 }

@@ -1,5 +1,6 @@
 package Utils;
 
+import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -14,11 +15,14 @@ public class Constants {
     public static Statement stmt;
     public static Connection conn;
     public static Synthesizer synthesizer;
+    public static ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO;
     public static Scanner sc = new Scanner(System.in);
+
     public static void setStatement(Statement statement){
         stmt = statement;
     }
     public static void setConnection(Connection connection) { conn = connection; }
+    public static void setParkingSlotQueryBuilderDao(ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDao) { parkingSlotQueryBuilderDAO = parkingSlotQueryBuilderDao; }
 
     public static Synthesizer initializeSpeechEngine() {
         System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us" + ".cmu_us_kal.KevinVoiceDirectory");

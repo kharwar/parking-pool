@@ -9,4 +9,8 @@ public interface ParkingSlotQueryBuilderDAO {
                                       double hourly_rate,
                                       int is_on_street,
                                       int owner_user_id);
+
+    String FindAllParkingSlotsQueryBuilder();
+    String DeleteParkingSlotQueryBuilder(int parkingSlotId, int userId);
 }
+

@@ -1,6 +1,8 @@
 package Modules.ParkingSlot;
 
+import Modules.ParkingSlot.Utils.ParkingSlotUtils;
 import Modules.ParkingSlot.controller.AddParkingSlot;
+import Modules.ParkingSlot.controller.DeleteParkingSlot;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilder;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import Modules.ParkingSlot.model.ParkingSlot;
@@ -8,17 +10,23 @@ import Modules.User.model.USER_TYPE;
 import Modules.User.model.User;
 import Utils.Constants;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class ParkingSlotView {
     User loggedInUser;
     Scanner sc = Constants.sc;
+    Statement stmt = Constants.stmt;
     ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO = ParkingSlotQueryBuilder.getInstance();
 
     // ----- PUBLIC ITEMS -----
     public ParkingSlotView(User user){
         loggedInUser = user;
+        Constants.setParkingSlotQueryBuilderDao(parkingSlotQueryBuilderDAO);
     }
 
     public boolean displayParkingSlotMenu(){
@@ -47,9 +55,7 @@ public class ParkingSlotView {
     // ----- PRIVATE ITEMS -----
     // ----- For displaying Vendor specific menu -----
     private boolean displayVendorMenu(){
-        System.out.println("Enter the following numbers to access the corresponding item:");
-        System.out.println("1: Add Parking Slot.\n2: Modify Parking Slot.\n3: Exit ParkingPool.");
-        System.out.print("\nEnter your command: ");
+        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Add Parking Slot.\n2: View My Parking Slots.\n3: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
         int input = Integer.parseInt(sc.nextLine());
         switch (input){
@@ -59,19 +65,70 @@ public class ParkingSlotView {
                 toContinue = true;
                 break;
             case 2:
-                System.out.println("Modify Parking Slot accessed.");
+                try {
+                    displayMyParkingSlots();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 toContinue = true;
                 break;
             case 3:
-                System.out.println("See you soon!");
+                Constants.printAndSpeak("See you soon!");
                 toContinue = false;
                 break;
             default:
-                System.out.println("Incorrect input.");
+                Constants.printAndSpeak("Incorrect input.");
                 displayVendorMenu();
                 break;
         }
         return toContinue;
+    }
+
+    private void displayMyParkingSlots() throws SQLException {
+        if(loggedInUser.role != USER_TYPE.VENDOR){
+            Constants.printAndSpeak("User is not a Vendor!");
+        } else {
+            String myParkingSlotsQuery = "SELECT * from ParkingSlot where owner_user_id="+loggedInUser.user_id;
+            ResultSet myParkingSlotsResultSet = stmt.executeQuery(myParkingSlotsQuery);
+            ArrayList<ParkingSlot> myParkingSlots = ParkingSlotUtils.ResultSetToParkingSlot(myParkingSlotsResultSet);
+            for (int i = 0; i < myParkingSlots.size(); i++) {
+                ParkingSlot myParkingSlot = myParkingSlots.get(i);
+                System.out.println("-------------------------------------------------------------------------");
+                System.out.println("Parking Slot ID: " + myParkingSlot.parking_slot_id);
+                System.out.println("Distance from Elevator (0 if no elevator): " + myParkingSlot.distance_from_elevator);
+                System.out.println("Address: " + myParkingSlot.address);
+                System.out.println("If the Parking is on Street: " + (myParkingSlot.is_on_street == 1 ? "Yes" : "No"));
+                System.out.println("If the Parking is for handicap: " + (myParkingSlot.is_handicap == 1 ? "Yes" : "No"));
+                System.out.println("Hourly Rate: " + myParkingSlot.hourly_rate);
+                System.out.println("Longitude: " + myParkingSlot.longitude);
+                System.out.println("Latitude: " + myParkingSlot.latitude);
+                System.out.println("-------------------------------------------------------------------------");
+            };
+            int selectedItem  = displayEditParkingSlotMenu();
+            switch(selectedItem){
+                case 1:
+                    DeleteParkingSlot deleteParkingSlot = new DeleteParkingSlot(parkingSlotQueryBuilderDAO);
+                    Constants.printAndSpeak("Enter the Parking Slot ID you want to delete: ");
+                    deleteParkingSlot.deleteParkingSlot(Integer.parseInt(sc.nextLine()), loggedInUser.user_id);
+                    break;
+                case 2:
+                    //TODO
+                    System.out.println("Modify Parking Slot accessed");
+                    break;
+                case 3:
+                    displayVendorMenu();
+                    break;
+                default:
+                    Constants.printAndSpeak("Selected option not recognized.");
+                    displayVendorMenu();
+                    break;
+            }
+        }
+    }
+
+    private int displayEditParkingSlotMenu(){
+        Constants.printAndSpeak("** Edit Parking Slots Menu **\n1. Delete a Parking Slot.\n2. Modify a Parking Slot.\n3. Go back\nEnter your command: ");
+        return Integer.parseInt(sc.nextLine().trim());
     }
 
     // This method will fetch all the parking slot details from the user and return a ParkingSlot.
