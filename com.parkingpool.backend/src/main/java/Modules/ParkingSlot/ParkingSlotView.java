@@ -3,6 +3,7 @@ package Modules.ParkingSlot;
 import Modules.ParkingSlot.Utils.ParkingSlotUtils;
 import Modules.ParkingSlot.controller.AddParkingSlot;
 import Modules.ParkingSlot.controller.DeleteParkingSlot;
+import Modules.ParkingSlot.controller.FindNearbyParkingSlots;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilder;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import Modules.ParkingSlot.model.ParkingSlot;
@@ -14,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class ParkingSlotView {
@@ -29,15 +29,14 @@ public class ParkingSlotView {
         Constants.setParkingSlotQueryBuilderDao(parkingSlotQueryBuilderDAO);
     }
 
-    public boolean displayParkingSlotMenu(){
+    public boolean displayParkingSlotMenu() throws SQLException {
         boolean toContinue = true;
         switch (loggedInUser.role){
             case VENDOR:
                 toContinue = displayVendorMenu();
                 break;
             case CUSTOMER:
-                System.out.println("Customer menu accessed.");
-                toContinue = true;
+                toContinue = displayCustomerMenu();
                 break;
             case ADMIN:
                 System.out.println("Admin menu accessed");
@@ -79,6 +78,24 @@ public class ParkingSlotView {
             default:
                 Constants.printAndSpeak("Incorrect input.");
                 displayVendorMenu();
+                break;
+        }
+        return toContinue;
+    }
+
+    public boolean displayCustomerMenu() throws SQLException {
+        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Find Nearby Parking Slots.\n3: Exit ParkingPool.\nEnter your command: ");
+        boolean toContinue = true;
+        int input =  Integer.parseInt(sc.nextLine());
+        switch(input){
+            case 1:
+                FindNearbyParkingSlots findNearbyParkingSlots = new FindNearbyParkingSlots();
+                Constants.printAndSpeak("Enter Longitude: ");
+                double longitude = Double.parseDouble(sc.nextLine());
+                Constants.printAndSpeak("Enter Latitude: ");
+                double latitude = Double.parseDouble(sc.nextLine());
+                ArrayList<ParkingSlot> parkingSlots = findNearbyParkingSlots.findNearbyParkingSlots(longitude, latitude);
+                ParkingSlotUtils.viewParkingSlots(parkingSlots);
                 break;
         }
         return toContinue;

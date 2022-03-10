@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class ParkingSlotUtils {
     private final ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO;
     private Statement stmt = Constants.stmt;
+
     public ParkingSlotUtils(ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO) {
         this.parkingSlotQueryBuilderDAO = parkingSlotQueryBuilderDAO;
     }
@@ -21,7 +22,7 @@ public class ParkingSlotUtils {
         return parkingSlots;
     }
 
-    public double calculateDistanceInMeters(double lat1, double long1, double lat2,
+    public static double calculateDistanceInMeters(double lat1, double long1, double lat2,
                                             double long2) {
 
 
@@ -44,5 +45,21 @@ public class ParkingSlotUtils {
             ));
         }
         return parkingSlots;
+    }
+
+    public static void viewParkingSlots(ArrayList<ParkingSlot> parkingSlots){
+        for (int i = 0; i < parkingSlots.size(); i++) {
+            ParkingSlot parkingSlot = parkingSlots.get(i);
+            System.out.println("-------------------------------------------------------------------------");
+            System.out.println("Parking Slot ID: " + parkingSlot.parking_slot_id);
+            System.out.println("Distance from Elevator (0 if no elevator): " + parkingSlot.distance_from_elevator);
+            System.out.println("Address: " + parkingSlot.address);
+            System.out.println("If the Parking is on Street: " + (parkingSlot.is_on_street == 1 ? "Yes" : "No"));
+            System.out.println("If the Parking is for handicap: " + (parkingSlot.is_handicap == 1 ? "Yes" : "No"));
+            System.out.println("Hourly Rate: " + parkingSlot.hourly_rate);
+            System.out.println("Longitude: " + parkingSlot.longitude);
+            System.out.println("Latitude: " + parkingSlot.latitude);
+            System.out.println("-------------------------------------------------------------------------");
+        };
     }
 }
