@@ -33,6 +33,8 @@ public class SignUp{
         if(rl=='c')role="customer";
         if(rl=='a')role="admin";
 
+        password = Hash.getHashCode(password);
+
         String query = "INSERT INTO `user` (`email`, `role`, `name`, `password`, `address`) VALUES ('"+email.trim()+"', '"+role.trim()+"', '"+name.trim()+"', '"+password.trim()+"', '"+address.trim()+"');";
 
         int rowAffected = stmt.executeUpdate(query);

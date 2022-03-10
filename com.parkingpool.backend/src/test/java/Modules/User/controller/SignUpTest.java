@@ -43,12 +43,21 @@ public class SignUpTest {
 
     }
 
-    /*
-    @Test
-    public void registerTest() {
 
-        Assertions.assertEquals(1,);
+    @Test
+    public void registerTest() throws SQLException {
+
+        Mockito.when(st.executeUpdate(Mockito.anyString())).thenReturn(1);
+        Assertions.assertEquals(1,su.register(st,"abc@gmail.com",'c',"abc","abc","xyz"));
     }
 
-     */
+    @Test
+    public void registerExceptionTest() {
+        assertDoesNotThrow(() -> {
+            Mockito.when(st.executeUpdate(Mockito.anyString())).thenReturn(1);
+            su.register(st,"abc@gmail.com",'c',"abc","abc","xyz");
+        });
+    }
+
+
 }
