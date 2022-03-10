@@ -71,6 +71,7 @@ public class ParkingPool {
         }
 
         User user = uv.getUser();
+        Constants.setUser(user);
         Constants.printAndSpeak("\n  Welcome "+user.getName()+", to the ParkingPool \n");
 
         ParkingSlotView parkingSlotView = new ParkingSlotView(user);
