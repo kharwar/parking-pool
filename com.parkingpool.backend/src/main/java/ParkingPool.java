@@ -1,5 +1,6 @@
 import DB.*;
 
+import Modules.Analytics.AnalyticsView;
 import Modules.ParkingSlot.ParkingSlotView;
 import Modules.User.UserView;
 import Modules.User.model.User;
@@ -82,7 +83,7 @@ public class ParkingPool {
         }
 
         Constants.printAndSpeak("Exiting ParkingPool!");
-        try {
+       try {
             dbi.clearDBConnection();
         }catch (SQLException e)
         {
