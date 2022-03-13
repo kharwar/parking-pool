@@ -41,6 +41,7 @@ public class ParkingPool {
         }
         //start from here
 
+
         UserView uv = new UserView();
 
         while(!IsLoggedIn) {
@@ -83,6 +84,7 @@ public class ParkingPool {
         }
 
         Constants.printAndSpeak("Exiting ParkingPool!");
+        //cd System.out.println("Done");
        try {
             dbi.clearDBConnection();
         }catch (SQLException e)
@@ -90,6 +92,6 @@ public class ParkingPool {
             Constants.printAndSpeak("Can not close the connection");
             e.printStackTrace();
         }
-
+        System.exit(1);
     }
 }

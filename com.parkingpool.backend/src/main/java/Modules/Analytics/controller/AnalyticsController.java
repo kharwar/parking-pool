@@ -24,7 +24,7 @@ public class AnalyticsController {
     public void createAnalyticsInCSVFormat(String FolderPath) throws SQLException {
 
 
-        ArrayList<AnalyticsData> l = this.getAnalytics();
+        ArrayList<AnalyticsData> l = getAnalytics();
 
         String filePath = FolderPath+"\\Analytics.csv";
         File file = new File(filePath);
@@ -40,18 +40,23 @@ public class AnalyticsController {
 
             for(AnalyticsData ad: l)
             {
-                String[] data1 = {String.valueOf(ad.parking_slot_id), ad.address, "https://www.google.com/maps/@"+ad.longitude+","+ad.latitude+",15z", String.valueOf(ad.revenue_generated), String.valueOf(ad.total_hours)};
+                String[] data1 = {String.valueOf(ad.parking_slot_id), ad.address, getLocationString(ad.longitude,ad.latitude), String.valueOf(ad.revenue_generated), String.valueOf(ad.total_hours)};
                 writer.writeNext(data1);
             }
 
             // closing writer connection
             writer.close();
+            outputfile.close();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
 
+    }
+
+    private String getLocationString(double longitude,double latitude) {
+        return "https://www.google.com/maps/@" + longitude + "," + latitude + ",15z";
     }
 
 
@@ -103,7 +108,10 @@ public class AnalyticsController {
 
     private double getTimeLength(Time start_time, Time end_time)
     {
-        return (end_time.getHours()-start_time.getHours())+((double)(end_time.getMinutes()-start_time.getMinutes())/60)+((double)(end_time.getSeconds()-start_time.getSeconds())/3600);
+        double Hour_difference = (double) (end_time.getHours() - start_time.getHours());
+        double Minutes_difference = (end_time.getMinutes() - start_time.getMinutes());
+        double second_difference = (end_time.getSeconds() - start_time.getSeconds());
+        return Hour_difference +(Minutes_difference /60)+(second_difference /3600);
     }
 
 }
