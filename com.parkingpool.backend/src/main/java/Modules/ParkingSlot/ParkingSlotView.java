@@ -1,6 +1,8 @@
 package Modules.ParkingSlot;
 
 import Modules.Analytics.AnalyticsView;
+import Modules.Booking.controller.BookingController;
+import Modules.Booking.model.Booking;
 import Modules.ParkingSlot.Utils.ParkingSlotUtils;
 import Modules.ParkingSlot.controller.AddParkingSlot;
 import Modules.ParkingSlot.controller.DeleteParkingSlot;
@@ -15,11 +17,12 @@ import Utils.Constants;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class ParkingSlotView {
@@ -100,8 +103,9 @@ public class ParkingSlotView {
                 double longitude = Double.parseDouble(sc.nextLine());
                 Constants.printAndSpeak("Enter Latitude: ");
                 double latitude = Double.parseDouble(sc.nextLine());
-                Constants.printAndSpeak("Enter the date (dd/MM/yyyy) you want to find the Parking Slot for: ");
-                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+                Constants.printAndSpeak("Enter the date (yyyy-mm-dd) you want to find the Parking Slot for: ");
+                Date date = Date.valueOf(sc.nextLine());
+                //Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
                 Constants.printAndSpeak("Enter the time (hh:mm:ss) you want to book your slot for: ");
                 LocalTime startTime = LocalTime.parse(sc.nextLine());
                 Constants.printAndSpeak("Enter the time (hh:mm:ss) you want to end your booking: ");
@@ -113,7 +117,9 @@ public class ParkingSlotView {
 
                 switch (bookInput){
                     case 1:
-                        //TODO: FOR BHAVNA (ADD BookAParkingSlot HERE)
+                        Constants.printAndSpeak("Enter the selected Parking Id");
+                        int parkingId = Integer.parseInt(sc.nextLine());
+                        BookAParkingSlot(parkingId, date, startTime, endTime);
                         break;
                     case 2:
                         ArrayList<ParkingSlot> sortedParkingSlots = findParkingSlots.filterAccordingToRate(foundParkingSlots);
@@ -125,7 +131,8 @@ public class ParkingSlotView {
                 }
                 break;
             case 2:
-                // TODO: FOR BHAVNA (ViewMyBookings)
+                BookingController bookingController = new BookingController();
+                bookingController.viewMyBookings();
                 break;
             case 3:
                 Constants.printAndSpeak("See you soon!");
@@ -226,5 +233,21 @@ public class ParkingSlotView {
 
     private void BookAParkingSlot(int parking_Id, Date date, LocalTime start_time, LocalTime end_time){
         //TODO: FOR BHAVNA
+        Booking booking =  new Booking();
+        booking.setBooking_date((java.sql.Date) date);
+        booking.setParking_id(parking_Id);
+        booking.setStart_time(Time.valueOf(start_time));
+        booking.setEnd_time(Time.valueOf(end_time));
+        booking.setUser_id(loggedInUser.user_id);
+        booking.setOwner_id(2);
+
+        BookingController bookingUtilities =  new BookingController();
+        try{
+            bookingUtilities.book_slot(booking);
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
