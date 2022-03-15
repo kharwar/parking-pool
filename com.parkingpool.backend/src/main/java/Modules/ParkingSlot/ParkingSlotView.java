@@ -1,5 +1,6 @@
 package Modules.ParkingSlot;
 
+import Modules.Analytics.AnalyticsView;
 import Modules.ParkingSlot.Utils.ParkingSlotUtils;
 import Modules.ParkingSlot.controller.AddParkingSlot;
 import Modules.ParkingSlot.controller.DeleteParkingSlot;
@@ -87,6 +88,7 @@ public class ParkingSlotView {
         return toContinue;
     }
 
+    //----- For displaying Customer specific menu -----
     public boolean displayCustomerMenu() throws SQLException, ParseException {
         Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Book a Parking Slot.\n2. View My Bookings\n3: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
@@ -133,6 +135,34 @@ public class ParkingSlotView {
         return toContinue;
     }
 
+    // ----- For displaying Admin specific Menu
+    private boolean displayAdminMenu() throws SQLException {
+        AnalyticsView analyticsView = new AnalyticsView();
+        boolean toContinue = true;
+        Constants.printAndSpeak("Enter the following number to access the corresponding item:\n1. Show Analysis of the data for ParkingPool\n2. Generate a Spreadsheet for the analytics\n3. Exit ParkingPool");
+        int input = Integer.parseInt(sc.nextLine());
+        switch(input){
+            case 1:
+                analyticsView.showAnalytics();
+                toContinue = true;
+                break;
+            case 2:
+                analyticsView.createAnalyticsCSV();
+                toContinue = true;
+                break;
+            case 3:
+                Constants.printAndSpeak("See you soon!");
+                toContinue = false;
+                break;
+            case 4:
+                Constants.printAndSpeak("Unknown item accessed! Try again!");
+                toContinue = true;
+                break;
+        }
+        return toContinue;
+    }
+
+    //Displays All Parking Slots of the loggedIn User.
     private void displayMyParkingSlots() throws SQLException {
         if(loggedInUser.role != USER_TYPE.VENDOR){
             Constants.printAndSpeak("User is not a Vendor!");
@@ -159,6 +189,7 @@ public class ParkingSlotView {
         }
     }
 
+    //Displays Edit Parking Slot Menu of the logged in user
     private int displayEditParkingSlotMenu(){
         Constants.printAndSpeak("** Edit Parking Slots Menu **\n1. Delete a Parking Slot.\n2. Go back\nEnter your command: ");
         return Integer.parseInt(sc.nextLine().trim());

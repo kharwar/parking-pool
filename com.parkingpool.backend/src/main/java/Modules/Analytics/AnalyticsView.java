@@ -2,6 +2,7 @@ package Modules.Analytics;
 
 import Modules.Analytics.controller.AnalyticsController;
 import Modules.Analytics.model.AnalyticsData;
+import Modules.User.model.USER_TYPE;
 import Utils.Constants;
 
 import java.sql.SQLException;
@@ -9,6 +10,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AnalyticsView {
+
+    public AnalyticsView(){
+        if(Constants.loggedInUser.role != USER_TYPE.ADMIN){
+            Constants.printAndSpeak("You are not an admin. App exited forcefully!");
+            System.exit(400);
+        }
+    }
 
     public void showAnalytics() throws SQLException {
         AnalyticsController ac = new AnalyticsController();
@@ -30,7 +38,6 @@ public class AnalyticsView {
         Scanner sc= new Scanner(System.in);
         AnalyticsController ac = new AnalyticsController();
 
-
         Constants.printAndSpeak("Please Enter folder Path: ");
         String path = sc.nextLine();
 
@@ -39,11 +46,5 @@ public class AnalyticsView {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
-
-
-
-
 }

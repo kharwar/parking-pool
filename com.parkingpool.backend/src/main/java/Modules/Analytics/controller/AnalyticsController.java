@@ -19,10 +19,7 @@ import java.util.ArrayList;
 
 public class AnalyticsController {
 
-
-
     public void createAnalyticsInCSVFormat(String FolderPath) throws SQLException {
-
 
         ArrayList<AnalyticsData> l = getAnalytics();
 
