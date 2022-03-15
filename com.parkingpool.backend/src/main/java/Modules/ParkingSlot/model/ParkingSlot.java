@@ -31,6 +31,9 @@ public class ParkingSlot {
         this.hourly_rate = hourly_rate;
         this.is_on_street = is_on_street;
         this.owner_user_id = owner_user_id;
+    }
 
+    public double getHourlyRate(){
+        return hourly_rate;
     }
 }

@@ -3,7 +3,7 @@ package Modules.ParkingSlot;
 import Modules.ParkingSlot.Utils.ParkingSlotUtils;
 import Modules.ParkingSlot.controller.AddParkingSlot;
 import Modules.ParkingSlot.controller.DeleteParkingSlot;
-import Modules.ParkingSlot.controller.FindNearbyParkingSlots;
+import Modules.ParkingSlot.controller.FindParkingSlots;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilder;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import Modules.ParkingSlot.model.ParkingSlot;
@@ -14,7 +14,11 @@ import Utils.Constants;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ParkingSlotView {
@@ -29,7 +33,7 @@ public class ParkingSlotView {
         Constants.setParkingSlotQueryBuilderDao(parkingSlotQueryBuilderDAO);
     }
 
-    public boolean displayParkingSlotMenu() throws SQLException {
+    public boolean displayParkingSlotMenu() throws SQLException, ParseException {
         boolean toContinue = true;
         switch (loggedInUser.role){
             case VENDOR:
@@ -83,19 +87,47 @@ public class ParkingSlotView {
         return toContinue;
     }
 
-    public boolean displayCustomerMenu() throws SQLException {
-        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Find Nearby Parking Slots.\n3: Exit ParkingPool.\nEnter your command: ");
+    public boolean displayCustomerMenu() throws SQLException, ParseException {
+        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Book a Parking Slot.\n2. View My Bookings\n3: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
         int input =  Integer.parseInt(sc.nextLine());
         switch(input){
             case 1:
-                FindNearbyParkingSlots findNearbyParkingSlots = new FindNearbyParkingSlots();
+                FindParkingSlots findParkingSlots = new FindParkingSlots();
                 Constants.printAndSpeak("Enter Longitude: ");
                 double longitude = Double.parseDouble(sc.nextLine());
                 Constants.printAndSpeak("Enter Latitude: ");
                 double latitude = Double.parseDouble(sc.nextLine());
-                ArrayList<ParkingSlot> parkingSlots = findNearbyParkingSlots.findNearbyParkingSlots(longitude, latitude);
-                ParkingSlotUtils.viewParkingSlots(parkingSlots);
+                Constants.printAndSpeak("Enter the date (dd/MM/yyyy) you want to find the Parking Slot for: ");
+                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+                Constants.printAndSpeak("Enter the time (hh:mm:ss) you want to book your slot for: ");
+                LocalTime startTime = LocalTime.parse(sc.nextLine());
+                Constants.printAndSpeak("Enter the time (hh:mm:ss) you want to end your booking: ");
+                LocalTime endTime = LocalTime.parse(sc.nextLine());
+                ArrayList<ParkingSlot> foundParkingSlots = findParkingSlots.findAvailableParkingSlots(longitude, latitude, date, startTime, endTime);
+                ParkingSlotUtils.viewParkingSlots(foundParkingSlots);
+                Constants.printAndSpeak("Enter the following numbers to access the corresponding item: \n1. Book a Parking Slot from above\n2. Filter according to rate\n3. Go back");
+                int bookInput = Integer.parseInt(sc.nextLine());
+
+                switch (bookInput){
+                    case 1:
+                        //TODO: FOR BHAVNA (ADD BookAParkingSlot HERE)
+                        break;
+                    case 2:
+                        ArrayList<ParkingSlot> sortedParkingSlots = findParkingSlots.filterAccordingToRate(foundParkingSlots);
+                        ParkingSlotUtils.viewParkingSlots(sortedParkingSlots);
+                        break;
+                    default:
+                        Constants.printAndSpeak("Incorrect input.");
+                        break;
+                }
+                break;
+            case 2:
+                // TODO: FOR BHAVNA (ViewMyBookings)
+                break;
+            case 3:
+                Constants.printAndSpeak("See you soon!");
+                System.exit(0);
                 break;
         }
         return toContinue;
@@ -108,19 +140,7 @@ public class ParkingSlotView {
             String myParkingSlotsQuery = "SELECT * from ParkingSlot where owner_user_id="+loggedInUser.user_id;
             ResultSet myParkingSlotsResultSet = stmt.executeQuery(myParkingSlotsQuery);
             ArrayList<ParkingSlot> myParkingSlots = ParkingSlotUtils.ResultSetToParkingSlot(myParkingSlotsResultSet);
-            for (int i = 0; i < myParkingSlots.size(); i++) {
-                ParkingSlot myParkingSlot = myParkingSlots.get(i);
-                System.out.println("-------------------------------------------------------------------------");
-                System.out.println("Parking Slot ID: " + myParkingSlot.parking_slot_id);
-                System.out.println("Distance from Elevator (0 if no elevator): " + myParkingSlot.distance_from_elevator);
-                System.out.println("Address: " + myParkingSlot.address);
-                System.out.println("If the Parking is on Street: " + (myParkingSlot.is_on_street == 1 ? "Yes" : "No"));
-                System.out.println("If the Parking is for handicap: " + (myParkingSlot.is_handicap == 1 ? "Yes" : "No"));
-                System.out.println("Hourly Rate: " + myParkingSlot.hourly_rate);
-                System.out.println("Longitude: " + myParkingSlot.longitude);
-                System.out.println("Latitude: " + myParkingSlot.latitude);
-                System.out.println("-------------------------------------------------------------------------");
-            };
+            ParkingSlotUtils.viewParkingSlots(myParkingSlots);
             int selectedItem  = displayEditParkingSlotMenu();
             switch(selectedItem){
                 case 1:
@@ -129,10 +149,6 @@ public class ParkingSlotView {
                     deleteParkingSlot.deleteParkingSlot(Integer.parseInt(sc.nextLine()), loggedInUser.user_id);
                     break;
                 case 2:
-                    //TODO
-                    System.out.println("Modify Parking Slot accessed");
-                    break;
-                case 3:
                     displayVendorMenu();
                     break;
                 default:
@@ -144,7 +160,7 @@ public class ParkingSlotView {
     }
 
     private int displayEditParkingSlotMenu(){
-        Constants.printAndSpeak("** Edit Parking Slots Menu **\n1. Delete a Parking Slot.\n2. Modify a Parking Slot.\n3. Go back\nEnter your command: ");
+        Constants.printAndSpeak("** Edit Parking Slots Menu **\n1. Delete a Parking Slot.\n2. Go back\nEnter your command: ");
         return Integer.parseInt(sc.nextLine().trim());
     }
 
@@ -175,5 +191,9 @@ public class ParkingSlotView {
 
         ParkingSlot parkingSlot = new ParkingSlot(-1, distance_from_elevator, address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id);
         return parkingSlot;
+    }
+
+    private void BookAParkingSlot(int parking_Id, Date date, LocalTime start_time, LocalTime end_time){
+        //TODO: FOR BHAVNA
     }
 }
