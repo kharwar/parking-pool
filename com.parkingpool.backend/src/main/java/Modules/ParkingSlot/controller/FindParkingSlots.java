@@ -22,11 +22,12 @@ public class FindParkingSlots {
         ArrayList<ParkingSlot> nearbyParkingSlots=new ArrayList<ParkingSlot>();
         ArrayList<ParkingSlot> allParkingSlots= parkingSlotUtils.FindAllParkingSlots();
         double distanceBetweenTwoPoint=0;
+        double max_distance = 10000;
 
         for (ParkingSlot parkingSlot:
              allParkingSlots) {
             distanceBetweenTwoPoint= parkingSlotUtils.calculateDistanceInMeters(latitude, longitude, parkingSlot.latitude, parkingSlot.longitude);
-            if(distanceBetweenTwoPoint<10000)
+            if(distanceBetweenTwoPoint<max_distance)
             {
                 nearbyParkingSlots.add(parkingSlot);
             }

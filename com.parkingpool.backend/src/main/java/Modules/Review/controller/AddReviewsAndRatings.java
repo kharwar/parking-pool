@@ -28,10 +28,10 @@ public class AddReviewsAndRatings {
         public void AddData()
         {
             Review review = CreateReview();
-            int parkingID = review.parkingID;
-            String reviews = review.reviews;
-            int ratings = review.ratings;
-            int userID = review.userID;
+            int parkingID = review.getParkingID();
+            String reviews = review.getReviews();
+            int ratings = review.getRatings();
+            int userID = review.getUserID();
 
             String insertQuery = "INSERT INTO reviews_and_ratings (parking_id, user_id, reviews, ratings) VALUES(" + parkingID + " , '"+userID+"' , '" + reviews + "' , '" + ratings + "');";
             try {

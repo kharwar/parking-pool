@@ -154,7 +154,7 @@ public class ParkingSlotView {
                 Constants.printAndSpeak("See you soon!");
                 toContinue = false;
                 break;
-            case 4:
+            default:
                 Constants.printAndSpeak("Unknown item accessed! Try again!");
                 toContinue = true;
                 break;
