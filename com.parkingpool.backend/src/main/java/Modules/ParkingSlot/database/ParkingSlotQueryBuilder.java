@@ -25,7 +25,8 @@ public class ParkingSlotQueryBuilder implements ParkingSlotQueryBuilderDAO{
     double hourly_rate,
     int is_on_street,
     int owner_user_id) {
-        return "INSERT INTO ParkingSlot (address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id) VALUES('"+
+        return "INSERT INTO ParkingSlot (distance_from_elevator, address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id) VALUES('"+
+                distance_from_elevator + "','" +
                 address + "','" +
                 is_handicap + "','" +
                 longitude + "','"+
