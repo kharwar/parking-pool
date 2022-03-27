@@ -11,6 +11,7 @@ import Modules.ParkingSlot.model.ParkingSlot;
 import Modules.User.model.USER_TYPE;
 import Modules.User.model.User;
 import Utils.Constants;
+import Utils.GoogleMap;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,13 +21,14 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ParkingSlotView {
-    User loggedInUser;
-    Scanner sc = Constants.sc;
-    Statement stmt = Constants.stmt;
-    ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO = ParkingSlotQueryBuilder.getInstance();
+    private User loggedInUser;
+    private Scanner sc = Constants.sc;
+    private Statement stmt = Constants.stmt;
+    private ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO = ParkingSlotQueryBuilder.getInstance();
 
     // ----- PUBLIC ITEMS -----
     public ParkingSlotView(User user){
@@ -44,8 +46,7 @@ public class ParkingSlotView {
                 toContinue = displayCustomerMenu();
                 break;
             case ADMIN:
-                System.out.println("Admin menu accessed");
-                toContinue = true;
+                toContinue = displayAdminMenu();
                 break;
             default:
                 System.out.println("User role not recognized");
@@ -53,7 +54,6 @@ public class ParkingSlotView {
         }
         return toContinue;
     }
-
 
 
     // ----- PRIVATE ITEMS -----
@@ -89,7 +89,7 @@ public class ParkingSlotView {
     }
 
     //----- For displaying Customer specific menu -----
-    public boolean displayCustomerMenu() throws SQLException, ParseException {
+    private boolean displayCustomerMenu() throws SQLException, ParseException {
         Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Book a Parking Slot.\n2. View My Bookings\n3: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
         int input =  Integer.parseInt(sc.nextLine());
@@ -197,20 +197,20 @@ public class ParkingSlotView {
 
     // This method will fetch all the parking slot details from the user and return a ParkingSlot.
     private ParkingSlot addParkingSlotDetails(){
-        System.out.print("Enter the address of the parking slot: ");
-        String address = sc.nextLine().trim();
+        Constants.printAndSpeak("Enter Google Map URL of the location: ");
+        String googleMap = sc.nextLine().trim();
+
+        Map<String, String> parsedGoogleMap = GoogleMap.parseUrl(googleMap);
+
+        String address = parsedGoogleMap.get("address");
+        double longitude = Double.parseDouble(parsedGoogleMap.get("longitude"));
+        double latitude = Double.parseDouble(parsedGoogleMap.get("latitude"));
 
         System.out.print("\nEnter the distance from elevator(enter 0 if there is no elevator): ");
         int distance_from_elevator = Integer.parseInt(sc.nextLine().trim());
 
         System.out.print("\nIs it for handicap? Yes or No: ");
         int is_handicap = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().equals("Y") ? '1' : '0'));
-
-        System.out.print("\nEnter the longitude of the parking slot: ");
-        double longitude = Double.parseDouble(sc.nextLine().trim());
-
-        System.out.print("\nEnter the latitude of the parking slot: ");
-        double latitude = Double.parseDouble(sc.nextLine().trim());
 
         System.out.print("\nIs the parking on street? Yes or No: ");
         int is_on_street = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().equals("Y") ? '1' : '0'));

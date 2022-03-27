@@ -1,7 +1,5 @@
 package Modules.ParkingSlot.model;
 
-import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
-
 public class ParkingSlot {
     public int parking_slot_id;
     public int distance_from_elevator;

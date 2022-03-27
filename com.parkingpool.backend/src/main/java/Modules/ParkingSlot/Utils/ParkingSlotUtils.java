@@ -3,6 +3,7 @@ package Modules.ParkingSlot.Utils;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import Modules.ParkingSlot.model.ParkingSlot;
 import Utils.Constants;
+import Utils.GoogleMap;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class ParkingSlotUtils {
             System.out.println("Hourly Rate: " + parkingSlot.hourly_rate);
             System.out.println("Longitude: " + parkingSlot.longitude);
             System.out.println("Latitude: " + parkingSlot.latitude);
+            System.out.println("Google Maps: " + GoogleMap.generateUrl(parkingSlot.address));
             System.out.println("-------------------------------------------------------------------------");
         };
     }
