@@ -15,6 +15,7 @@ import javax.speech.synthesis.SynthesizerModeDesc;
 
 public class Constants {
     public static Statement stmt;
+    public static boolean isSynthesizerEnabled = true;
     public static Connection conn;
     public static Synthesizer synthesizer;
     public static ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO;
@@ -55,6 +56,11 @@ public class Constants {
         return synthesizer;
     }
 
+    public static void toggleSynthesizer(boolean toggle){
+        isSynthesizerEnabled = toggle;
+        Constants.printAndSpeak(toggle ? "Synthesizer will stay on!" : "Synthesizer turned off!");
+    }
+
     public static void printAndSpeak(String str)
     {
         if(synthesizer==null)
@@ -62,13 +68,16 @@ public class Constants {
             synthesizer = initializeSpeechEngine();
         }
         System.out.println(str);
-        synthesizer.speakPlainText(str, null);
-        try {
-            synthesizer.waitEngineState(Synthesizer.QUEUE_EMPTY);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.out.println("Something went wrong with waitEngine");
+        if(isSynthesizerEnabled){
+            synthesizer.speakPlainText(str, null);
+            try {
+                synthesizer.waitEngineState(Synthesizer.QUEUE_EMPTY);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                System.out.println("Something went wrong with waitEngine");
+            }
         }
+
     }
 
 }

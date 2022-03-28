@@ -217,10 +217,10 @@ public class ParkingSlotView {
         int distance_from_elevator = Integer.parseInt(sc.nextLine().trim());
 
         System.out.print("\nIs it for handicap? Yes or No: ");
-        int is_handicap = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().equals("Y") ? '1' : '0'));
+        int is_handicap = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().startsWith("Y") ? '1' : '0'));
 
         System.out.print("\nIs the parking on street? Yes or No: ");
-        int is_on_street = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().equals("Y") ? '1' : '0'));
+        int is_on_street = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().startsWith("Y") ? '1' : '0'));
 
         System.out.print("\nEnter the hourly rate of the parking slot: ");
         float hourly_rate = Float.parseFloat(sc.nextLine().trim());
