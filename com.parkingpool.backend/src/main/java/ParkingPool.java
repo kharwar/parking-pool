@@ -23,7 +23,6 @@ public class ParkingPool {
     public static void main(String[] args) throws SQLException, ParseException {
         Connection conn=null;//use conn for connection
         Statement stmt=null;//use stmt for statement
-        PreparedStatement preparedStatement = null; //used for PreparedStatement
         DBInterface dbi = DBConnection.getInstance();
         Scanner sc= new Scanner(System.in);//use sc for scanner
         boolean IsLoggedIn=false;
@@ -38,7 +37,7 @@ public class ParkingPool {
             System.exit(0);
         }
         //start from here
-        Constants.printAndSpeak("Do you want to turn the Voice Synthesizer? Yes or No:");
+        Constants.printAndSpeak("Do you want to turn the Voice Synthesizer on? Yes or No:");
         boolean synthesizerSwitch = sc.nextLine().toUpperCase().startsWith("Y");
         Constants.toggleSynthesizer(synthesizerSwitch);
 
