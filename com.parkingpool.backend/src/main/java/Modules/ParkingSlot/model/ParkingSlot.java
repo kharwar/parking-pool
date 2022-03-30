@@ -1,5 +1,7 @@
 package Modules.ParkingSlot.model;
 
+import java.sql.Time;
+
 public class ParkingSlot {
     public int parking_slot_id;
     public int distance_from_elevator;
@@ -10,6 +12,8 @@ public class ParkingSlot {
     public double hourly_rate;
     public int is_on_street;
     public int owner_user_id;
+    public Time start_time;
+    public Time end_time;
 
     public ParkingSlot(int parking_slot_id,
                        int distance_from_elevator,
@@ -19,7 +23,9 @@ public class ParkingSlot {
                        double latitude,
                        double hourly_rate,
                        int is_on_street,
-                       int owner_user_id){
+                       int owner_user_id,
+                       Time start_time,
+                       Time end_time) {
         this.parking_slot_id = parking_slot_id;
         this.distance_from_elevator = distance_from_elevator;
         this.address = address;
@@ -29,6 +35,8 @@ public class ParkingSlot {
         this.hourly_rate = hourly_rate;
         this.is_on_street = is_on_street;
         this.owner_user_id = owner_user_id;
+        this.start_time = start_time;
+        this.end_time = end_time;
     }
 
     public double getHourlyRate(){

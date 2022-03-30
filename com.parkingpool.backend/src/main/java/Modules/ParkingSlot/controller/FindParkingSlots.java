@@ -7,6 +7,7 @@ import Utils.Constants;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -35,7 +36,7 @@ public class FindParkingSlots {
     }
 
     public ArrayList<ParkingSlot> findAvailableParkingSlots(double longitude, double latitude, Date date, LocalTime startTime, LocalTime endTime) throws SQLException {
-        String getBookedSlotsQuery = "SELECT * FROM booking WHERE date > \"" + date + "\" and (end_time < \""  + startTime + "\" or start_time < \"" + endTime + "\")";
+        String getBookedSlotsQuery = "SELECT * FROM booking WHERE date >= \"" + date + "\" and (end_time <= \""  + startTime + "\" or start_time <= \"" + endTime + "\")";
         ResultSet rs = Constants.stmt.executeQuery(getBookedSlotsQuery);
         ArrayList<Booking> bookedSlots = new ArrayList<Booking>();
 
@@ -52,13 +53,13 @@ public class FindParkingSlots {
         }
 
         ArrayList<ParkingSlot> nearbyParkingSlots = findNearbyParkingSlots(longitude, latitude);
-        ArrayList<ParkingSlot> finalParkingSlots = nearbyParkingSlots;
+        ArrayList<ParkingSlot> finalParkingSlots = new ArrayList<ParkingSlot>(nearbyParkingSlots);
 
         List<Integer> parking_ids = bookedSlots.stream().map(Booking::getParking_id).collect(Collectors.toList());
 
         for (ParkingSlot parkingSlot:
              nearbyParkingSlots) {
-            if(parking_ids.contains(parkingSlot.parking_slot_id)){
+            if(isParkingSlotNotAcceptable(parking_ids, parkingSlot, startTime, endTime)){
                 finalParkingSlots.remove(parkingSlot);
             }
         }
@@ -68,5 +69,10 @@ public class FindParkingSlots {
     public ArrayList<ParkingSlot> filterAccordingToRate(ArrayList<ParkingSlot> parkingSlots){
         parkingSlots.sort(Comparator.comparing(ParkingSlot::getHourlyRate));
         return parkingSlots;
+    }
+
+    // ----- PRIVATE ITEMS -----
+    private boolean isParkingSlotNotAcceptable(List<Integer> parking_ids, ParkingSlot parkingSlot ,LocalTime startTime, LocalTime endTime)  {
+        return parking_ids.contains(parkingSlot.parking_slot_id) || ((parkingSlot.start_time.after(Time.valueOf(startTime)) && parkingSlot.end_time.before(Time.valueOf(endTime))));
     }
 }

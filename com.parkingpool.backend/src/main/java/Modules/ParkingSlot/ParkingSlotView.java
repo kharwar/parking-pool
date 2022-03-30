@@ -213,21 +213,27 @@ public class ParkingSlotView {
         double longitude = Double.parseDouble(parsedGoogleMap.get("longitude"));
         double latitude = Double.parseDouble(parsedGoogleMap.get("latitude"));
 
-        System.out.print("\nEnter the distance from elevator(enter 0 if there is no elevator): ");
+        Constants.printAndSpeak("\nEnter the distance from elevator(enter 0 if there is no elevator): ");
         int distance_from_elevator = Integer.parseInt(sc.nextLine().trim());
 
-        System.out.print("\nIs it for handicap? Yes or No: ");
+        Constants.printAndSpeak("\nIs it for handicap? Yes or No: ");
         int is_handicap = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().startsWith("Y") ? '1' : '0'));
 
-        System.out.print("\nIs the parking on street? Yes or No: ");
+        Constants.printAndSpeak("\nIs the parking on street? Yes or No: ");
         int is_on_street = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().startsWith("Y") ? '1' : '0'));
 
-        System.out.print("\nEnter the hourly rate of the parking slot: ");
+        Constants.printAndSpeak("\nEnter the hourly rate of the parking slot: ");
         float hourly_rate = Float.parseFloat(sc.nextLine().trim());
+
+        Constants.printAndSpeak("\nEnter the starting hour (hh:mm:ss) of the Parking Slot: ");
+        Time start_time = Time.valueOf(sc.nextLine().trim());
+
+        Constants.printAndSpeak("\nEnter the ending hour (hh:mm:ss) of the Parking Slot: ");
+        Time end_time = Time.valueOf(sc.nextLine().trim());
 
         int owner_user_id = loggedInUser.user_id;
 
-        ParkingSlot parkingSlot = new ParkingSlot(-1, distance_from_elevator, address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id);
+        ParkingSlot parkingSlot = new ParkingSlot(-1, distance_from_elevator, address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id, start_time, end_time);
         return parkingSlot;
     }
 
