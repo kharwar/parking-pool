@@ -10,10 +10,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FindParkingSlots {
@@ -68,12 +65,17 @@ public class FindParkingSlots {
     }
 
     public ArrayList<ParkingSlot> sortAccordingToRate(ArrayList<ParkingSlot> parkingSlots){
-        parkingSlots.sort(Comparator.comparing(ParkingSlot::getHourlyRate));
+        Collections.sort(parkingSlots, Comparator.comparing(ParkingSlot::getHourlyRate));
         return parkingSlots;
     }
 
-    public ArrayList<ParkingSlot> sortAccordingToDistance(ArrayList<ParkingSlot> parkingSlots, double longitude, double latitude){
-        parkingSlots.sort(Comparator.comparing(parkingSlot -> parkingSlotUtils.calculateDistanceInMeters(latitude, longitude, parkingSlot.latitude, parkingSlot.longitude)));
+    private ArrayList<ParkingSlot> sortAccordingToDistance(ArrayList<ParkingSlot> parkingSlots, double longitude, double latitude){
+        Collections.sort(parkingSlots, Comparator.comparing(parkingSlot -> parkingSlotUtils.calculateDistanceInMeters(latitude, longitude, parkingSlot.latitude, parkingSlot.longitude)));
+        return parkingSlots;
+    }
+
+    public ArrayList<ParkingSlot> sortAccordingToDistanceFromElevator(ArrayList<ParkingSlot> parkingSlots){
+        Collections.sort(parkingSlots, Comparator.comparing(parkingSlot -> parkingSlot.distance_from_elevator)); ;
         return parkingSlots;
     }
 
