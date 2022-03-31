@@ -11,7 +11,7 @@ mvn-build:
   tags:
     - dalfcs_docker_kvm
   script:
-    - mvn clean package
+    - mvn clean install
   artifacts:
     paths:
       - target
