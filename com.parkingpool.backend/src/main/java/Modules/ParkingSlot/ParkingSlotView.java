@@ -113,8 +113,9 @@ public class ParkingSlotView {
                 Constants.printAndSpeak("Enter the time (hh:mm:ss) you want to end your booking: ");
                 LocalTime endTime = LocalTime.parse(sc.nextLine());
                 ArrayList<ParkingSlot> foundParkingSlots = findParkingSlots.findAvailableParkingSlots(longitude, latitude, date, startTime, endTime);
+
                 ParkingSlotUtils.viewParkingSlots(foundParkingSlots);
-                Constants.printAndSpeak("Enter the following numbers to access the corresponding item: \n1. Book a Parking Slot from above\n2. Filter according to rate\n3. Go back");
+                Constants.printAndSpeak("Enter the following numbers to access the corresponding item: \n1. Book a Parking Slot from above\n2. Sort according to rate\n3. Sort according to distance from elevator.\n4. Go Back\nEnter your command: ");
                 int bookInput = Integer.parseInt(sc.nextLine());
 
                 switch (bookInput){
@@ -124,11 +125,12 @@ public class ParkingSlotView {
                         BookAParkingSlot(parkingId, date, startTime, endTime);
                         break;
                     case 2:
-                        ArrayList<ParkingSlot> sortedParkingSlots = findParkingSlots.sortAccordingToRate(foundParkingSlots);
-                        ParkingSlotUtils.viewParkingSlots(sortedParkingSlots);
+                        ArrayList<ParkingSlot> sortedRateParkingSlots = findParkingSlots.sortAccordingToRate(foundParkingSlots);
+                        ParkingSlotUtils.viewParkingSlots(sortedRateParkingSlots);
                         break;
                     case 3:
-                        break;
+                        ArrayList<ParkingSlot> sortedDistanceFromElevatorParkingSlots = findParkingSlots.sortAccordingToDistanceFromElevator(foundParkingSlots);
+                        ParkingSlotUtils.viewParkingSlots(sortedDistanceFromElevatorParkingSlots);
                     default:
                         Constants.printAndSpeak("Incorrect input.");
                         break;
