@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -53,26 +54,36 @@ public class FindParkingSlots {
         }
 
         ArrayList<ParkingSlot> nearbyParkingSlots = findNearbyParkingSlots(longitude, latitude);
-        ArrayList<ParkingSlot> finalParkingSlots = new ArrayList<ParkingSlot>(nearbyParkingSlots);
+        ArrayList<ParkingSlot> finalParkingSlots = new ArrayList<ParkingSlot>();
 
-        List<Integer> parking_ids = bookedSlots.stream().map(Booking::getParking_id).collect(Collectors.toList());
+        List<Integer> booked_parking_ids = bookedSlots.stream().map(Booking::getParking_id).collect(Collectors.toList());
 
         for (ParkingSlot parkingSlot:
              nearbyParkingSlots) {
-            if(isParkingSlotNotAcceptable(parking_ids, parkingSlot, startTime, endTime)){
-                finalParkingSlots.remove(parkingSlot);
+            if(isParkingSlotAvailable(booked_parking_ids, parkingSlot, startTime, endTime)){
+                finalParkingSlots.add(parkingSlot);
             }
         }
-        return finalParkingSlots;
+        return sortAccordingToDistance(finalParkingSlots, longitude, latitude);
     }
 
-    public ArrayList<ParkingSlot> filterAccordingToRate(ArrayList<ParkingSlot> parkingSlots){
+    public ArrayList<ParkingSlot> sortAccordingToRate(ArrayList<ParkingSlot> parkingSlots){
         parkingSlots.sort(Comparator.comparing(ParkingSlot::getHourlyRate));
         return parkingSlots;
     }
 
+    public ArrayList<ParkingSlot> sortAccordingToDistance(ArrayList<ParkingSlot> parkingSlots, double longitude, double latitude){
+        parkingSlots.sort(Comparator.comparing(parkingSlot -> parkingSlotUtils.calculateDistanceInMeters(latitude, longitude, parkingSlot.latitude, parkingSlot.longitude)));
+        return parkingSlots;
+    }
+
     // ----- PRIVATE ITEMS -----
-    private boolean isParkingSlotNotAcceptable(List<Integer> parking_ids, ParkingSlot parkingSlot ,LocalTime startTime, LocalTime endTime)  {
-        return parking_ids.contains(parkingSlot.parking_slot_id) || ((parkingSlot.start_time.after(Time.valueOf(startTime)) && parkingSlot.end_time.before(Time.valueOf(endTime))));
+    private boolean isParkingSlotAvailable(List<Integer> booked_parking_ids, ParkingSlot parkingSlot, LocalTime startTime, LocalTime endTime){
+        LocalTime parkingSlotStartTime = LocalTime.parse(parkingSlot.start_time.toString(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        LocalTime parkingSlotEndTime = LocalTime.parse(parkingSlot.end_time.toString(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+//        System.out.println(parkingSlotStartTime.isAfter(endTime));
+        //TODO: Business hours for parking slot
+        return (!booked_parking_ids.contains(parkingSlot.parking_slot_id));
+//        return (!booked_parking_ids.contains(parkingSlot.parking_slot_id)) && (parkingSlotStartTime.isBefore(startTime) && parkingSlotEndTime.isAfter(endTime));
     }
 }

@@ -1,26 +1,27 @@
 package Utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GoogleMap {
     public static Map<String, String> parseUrl(String googleMapUrl){
-        if(!googleMapUrl.contains("https://www.google.com/maps/place/")){
-            Constants.printAndSpeak("ParkingPool could not detect the place from the provided URL!");
+        Map<String, String> parsedData = new HashMap<String, String>();
+        String address = "";
+        String[] googleMapUrlSplit = googleMapUrl.split("/");
+        int splitIndex = 0;
+        if(googleMapUrlSplit[4].equals("place")){
+            address = String.join(" ", googleMapUrlSplit[5].split("\\+"));
+            splitIndex = 6;
+        } else if(googleMapUrlSplit[4].charAt(0) == '@'){
+            address = "";
+            splitIndex = 4;
+        } else {
+            Constants.printAndSpeak("Sorry, I couldn't find the address.");
             return null;
         }
-        Map<String, String> parsedData = new HashMap<String, String>();
-        String[] googleMapUrlSplit = googleMapUrl.split("/");
-
-        String address = String.join(" ", googleMapUrlSplit[5].split("\\+"));
+        String[] rawCoordinates = googleMapUrlSplit[splitIndex].split(",");
         parsedData.put("address", address);
-
-        String[] rawCoords = googleMapUrlSplit[6].split(",");
-        String longitude = rawCoords[0].substring(1);
-        String latitude = rawCoords[1];
-        parsedData.put("longitude", longitude);
-        parsedData.put("latitude", latitude);
-
+        parsedData.put("longitude", rawCoordinates[0].substring(1));
+        parsedData.put("latitude", rawCoordinates[1]);
         return parsedData;
     }
 
