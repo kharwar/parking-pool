@@ -99,10 +99,12 @@ public class ParkingSlotView {
         switch(input){
             case 1:
                 FindParkingSlots findParkingSlots = new FindParkingSlots();
-                Constants.printAndSpeak("Enter Longitude: ");
-                double longitude = Double.parseDouble(sc.nextLine());
-                Constants.printAndSpeak("Enter Latitude: ");
-                double latitude = Double.parseDouble(sc.nextLine());
+                Constants.printAndSpeak("Enter the Google Maps URL of the location you want to find nearby parking locations to: ");
+                Map<String, String> map = GoogleMap.parseUrl(sc.nextLine().trim());
+
+                double longitude = Double.parseDouble(map.get("longitude"));
+                double latitude = Double.parseDouble(map.get("latitude"));
+
                 Constants.printAndSpeak("Enter the date (yyyy-mm-dd) you want to find the Parking Slot for: ");
                 Date date = Date.valueOf(sc.nextLine());
                 //Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
@@ -122,8 +124,10 @@ public class ParkingSlotView {
                         BookAParkingSlot(parkingId, date, startTime, endTime);
                         break;
                     case 2:
-                        ArrayList<ParkingSlot> sortedParkingSlots = findParkingSlots.filterAccordingToRate(foundParkingSlots);
+                        ArrayList<ParkingSlot> sortedParkingSlots = findParkingSlots.sortAccordingToRate(foundParkingSlots);
                         ParkingSlotUtils.viewParkingSlots(sortedParkingSlots);
+                        break;
+                    case 3:
                         break;
                     default:
                         Constants.printAndSpeak("Incorrect input.");
