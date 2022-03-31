@@ -37,10 +37,7 @@ code-quality:
   image: maven:3-jdk-11
   variables:
     UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization: Token $QSCORED_API_KEY" + -H "username:vanshikagohel1@gmail.com" -H "Content-Type:   application/xml" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_PIPELINE_ID&project_name=parking_pool_project" -F "file=@DesigniteAnalysis.xml"'
-  before_script:
-    - apt-get update
-    - apt-get install -y wget curl
-    - wget -O DesigniteJava.jar https://www.dropbox.com/s/mwizkj8uhplz4x3/DesigniteJava.jar?dl=1
+
   script:
     - java -jar DesigniteJava.jar -i ./ -o quality-check/ -f XML
     - ls -l
