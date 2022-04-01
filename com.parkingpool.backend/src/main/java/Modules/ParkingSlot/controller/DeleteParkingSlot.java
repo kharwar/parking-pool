@@ -16,7 +16,7 @@ public class DeleteParkingSlot {
 
     public void deleteParkingSlot(int parkingSlotId, int userId) throws SQLException {
         String deleteParkingSlotQuery = parkingSlotQueryBuilderDAO.DeleteParkingSlotQueryBuilder(parkingSlotId, userId);
-        stmt.execute(deleteParkingSlotQuery);
+        Constants.stmt.execute(deleteParkingSlotQuery);
         Constants.printAndSpeak("The Parking Slot has been deleted successfully!\n");
     }
 }

@@ -37,7 +37,7 @@ public class AddParkingSlot {
         );
         boolean isAdded = false;
         try {
-            isAdded = stmt.execute(addParkingSlotQuery);
+            isAdded = Constants.stmt.execute(addParkingSlotQuery);
             if(isAdded){
                 System.out.println("**** Parking Slot has been added *****");
             }

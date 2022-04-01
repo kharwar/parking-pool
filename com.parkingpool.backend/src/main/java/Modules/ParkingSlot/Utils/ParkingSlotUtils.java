@@ -18,7 +18,7 @@ public class ParkingSlotUtils {
 
     public ArrayList<ParkingSlot> FindAllParkingSlots() throws SQLException {
         String findAllParkingSlotQuery = parkingSlotQueryBuilderDAO.FindAllParkingSlotsQueryBuilder();
-        ResultSet parkingSlotResultSet = stmt.executeQuery(findAllParkingSlotQuery);
+        ResultSet parkingSlotResultSet = Constants.stmt.executeQuery(findAllParkingSlotQuery);
         ArrayList<ParkingSlot> parkingSlots = ResultSetToParkingSlot(parkingSlotResultSet);
         return parkingSlots;
     }

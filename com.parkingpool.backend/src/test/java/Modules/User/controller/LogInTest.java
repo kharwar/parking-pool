@@ -13,7 +13,7 @@ import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LogInTest {
+public class LogInTest {
 
     public Statement st;
     public ResultSet rs;
