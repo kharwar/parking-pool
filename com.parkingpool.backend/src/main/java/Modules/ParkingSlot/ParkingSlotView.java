@@ -112,7 +112,9 @@ public class ParkingSlotView {
                 LocalTime startTime = LocalTime.parse(sc.nextLine());
                 Constants.printAndSpeak("Enter the time (hh:mm:ss) you want to end your booking: ");
                 LocalTime endTime = LocalTime.parse(sc.nextLine());
-                ArrayList<ParkingSlot> foundParkingSlots = findParkingSlots.findAvailableParkingSlots(longitude, latitude, date, startTime, endTime);
+                Constants.printAndSpeak("Do you require the Parking Slot to be handicapped accessible? Yes or No: ");
+                boolean handicappedAccessible = sc.nextLine().toLowerCase().charAt(0) == 'y';
+                ArrayList<ParkingSlot> foundParkingSlots = findParkingSlots.findAvailableParkingSlots(longitude, latitude, date, startTime, endTime, handicappedAccessible);
 
                 ParkingSlotUtils.viewParkingSlots(foundParkingSlots);
                 Constants.printAndSpeak("Enter the following numbers to access the corresponding item: \n1. Book a Parking Slot from above\n2. Sort according to rate\n3. Sort according to distance from elevator.\n4. Go Back\nEnter your command: ");
