@@ -33,7 +33,7 @@ public class FindParkingSlots {
         return nearbyParkingSlots;
     }
 
-    public ArrayList<ParkingSlot> findAvailableParkingSlots(double longitude, double latitude, Date date, LocalTime startTime, LocalTime endTime) throws SQLException {
+    public ArrayList<ParkingSlot> findAvailableParkingSlots(double longitude, double latitude, Date date, LocalTime startTime, LocalTime endTime, boolean handicapAccessible) throws SQLException {
         String getBookedSlotsQuery = "SELECT * FROM booking WHERE date >= \"" + date + "\" and (end_time <= \""  + startTime + "\" or start_time <= \"" + endTime + "\")";
         ResultSet rs = Constants.stmt.executeQuery(getBookedSlotsQuery);
         ArrayList<Booking> bookedSlots = new ArrayList<Booking>();
@@ -60,6 +60,20 @@ public class FindParkingSlots {
             if(isParkingSlotAvailable(booked_parking_ids, parkingSlot, startTime, endTime)){
                 finalParkingSlots.add(parkingSlot);
             }
+        }
+
+        if(!handicapAccessible){
+            int handicapCount = 0;
+            for (ParkingSlot parkingSlot:
+                    finalParkingSlots) {
+                if(parkingSlot.is_handicap == 1){
+                    handicapCount++;
+                }
+            }
+            if(handicapCount / finalParkingSlots.size() > 0.3){
+                finalParkingSlots = new ArrayList<ParkingSlot>(finalParkingSlots.stream().filter(parkingSlot -> parkingSlot.is_handicap == 1).collect(Collectors.toList()));
+            }
+
         }
         return sortAccordingToDistance(finalParkingSlots, longitude, latitude);
     }
