@@ -15,7 +15,7 @@ import javax.speech.synthesis.SynthesizerModeDesc;
 
 public class Constants {
     public static Statement stmt;
-    public static boolean isSynthesizerEnabled = true;
+    public static boolean isSynthesizerEnabled = false;
     public static Connection conn;
     public static Synthesizer synthesizer;
     public static ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO;
@@ -69,7 +69,11 @@ public class Constants {
         }
         System.out.println(str);
         if(isSynthesizerEnabled){
-            synthesizer.speakPlainText(str, null);
+            try{
+                synthesizer.speakPlainText(str, null);
+            } catch (Exception e){
+                System.out.println("No interface found!");
+            }
             try {
                 synthesizer.waitEngineState(Synthesizer.QUEUE_EMPTY);
             } catch (InterruptedException e) {

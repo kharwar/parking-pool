@@ -17,7 +17,7 @@ mvn-build:
     - mvn clean install
   artifacts:
     paths:
-      - target
+      - "./com.parkingpool.backend/target/"
 
 mvn-test:
   stage: test
@@ -41,6 +41,7 @@ code-quality:
     - apt-get update
     - apt-get install -y wget curl
     - wget -O DesigniteJava.jar https://www.dropbox.com/s/mwizkj8uhplz4x3/DesigniteJava.jar?dl=1
+
   script:
     - java -jar DesigniteJava.jar -i ./ -o quality-check/ -f XML
     - ls -l
@@ -48,9 +49,7 @@ code-quality:
     - cd quality-check
     - eval "$UPLOAD_QUALITY_REPORT"
     - echo "$UPLOAD_QUALITY_REPORT"
-  only:
-    - dev
-    - main
+
 
 deploy:
   stage: deploy
@@ -58,7 +57,8 @@ deploy:
     - dalfcs_docker_kvm
   artifacts:
     paths:
-      - target
+      - "./com.parkingpool.backend/target/"
+
   script:
     - echo "dbURL=$DATABASE_PROD_URL" > config.properties
     - echo "dbUserName=$DATABASE_PROD_USERNAME" >> config.properties
@@ -67,8 +67,10 @@ deploy:
     - echo "Deploying the release pipeline"
     - chmod og-rwx ${DEPLOY_SSH_KEY}
     - tar -czf ${CI_COMMIT_SHORT_SHA}.tar.gz target
-    - echo ${DEPLOY_DIR}
     - scp -r -o StrictHostKeyChecking=no -i "${DEPLOY_SSH_KEY}" ${CI_COMMIT_SHORT_SHA}.tar.gz "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}.tar.gz"
+
   only:
     - dev
     - main
+    - test
+

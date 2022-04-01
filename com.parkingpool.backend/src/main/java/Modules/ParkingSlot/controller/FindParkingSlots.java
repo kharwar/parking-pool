@@ -10,10 +10,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FindParkingSlots {
@@ -36,7 +33,7 @@ public class FindParkingSlots {
         return nearbyParkingSlots;
     }
 
-    public ArrayList<ParkingSlot> findAvailableParkingSlots(double longitude, double latitude, Date date, LocalTime startTime, LocalTime endTime) throws SQLException {
+    public ArrayList<ParkingSlot> findAvailableParkingSlots(double longitude, double latitude, Date date, LocalTime startTime, LocalTime endTime, boolean handicapAccessible) throws SQLException {
         String getBookedSlotsQuery = "SELECT * FROM booking WHERE date >= \"" + date + "\" and (end_time <= \""  + startTime + "\" or start_time <= \"" + endTime + "\")";
         ResultSet rs = Constants.stmt.executeQuery(getBookedSlotsQuery);
         ArrayList<Booking> bookedSlots = new ArrayList<Booking>();
@@ -64,16 +61,35 @@ public class FindParkingSlots {
                 finalParkingSlots.add(parkingSlot);
             }
         }
+
+        if(!handicapAccessible){
+            int handicapCount = 0;
+            for (ParkingSlot parkingSlot:
+                    finalParkingSlots) {
+                if(parkingSlot.is_handicap == 1){
+                    handicapCount++;
+                }
+            }
+            if(handicapCount / finalParkingSlots.size() > 0.3){
+                finalParkingSlots = new ArrayList<ParkingSlot>(finalParkingSlots.stream().filter(parkingSlot -> parkingSlot.is_handicap == 1).collect(Collectors.toList()));
+            }
+
+        }
         return sortAccordingToDistance(finalParkingSlots, longitude, latitude);
     }
 
     public ArrayList<ParkingSlot> sortAccordingToRate(ArrayList<ParkingSlot> parkingSlots){
-        parkingSlots.sort(Comparator.comparing(ParkingSlot::getHourlyRate));
+        Collections.sort(parkingSlots, Comparator.comparing(ParkingSlot::getHourlyRate));
         return parkingSlots;
     }
 
-    public ArrayList<ParkingSlot> sortAccordingToDistance(ArrayList<ParkingSlot> parkingSlots, double longitude, double latitude){
-        parkingSlots.sort(Comparator.comparing(parkingSlot -> parkingSlotUtils.calculateDistanceInMeters(latitude, longitude, parkingSlot.latitude, parkingSlot.longitude)));
+    private ArrayList<ParkingSlot> sortAccordingToDistance(ArrayList<ParkingSlot> parkingSlots, double longitude, double latitude){
+        Collections.sort(parkingSlots, Comparator.comparing(parkingSlot -> parkingSlotUtils.calculateDistanceInMeters(latitude, longitude, parkingSlot.latitude, parkingSlot.longitude)));
+        return parkingSlots;
+    }
+
+    public ArrayList<ParkingSlot> sortAccordingToDistanceFromElevator(ArrayList<ParkingSlot> parkingSlots){
+        Collections.sort(parkingSlots, Comparator.comparing(parkingSlot -> parkingSlot.distance_from_elevator)); ;
         return parkingSlots;
     }
 
