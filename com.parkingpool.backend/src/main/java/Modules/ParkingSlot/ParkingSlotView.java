@@ -94,7 +94,7 @@ public class ParkingSlotView {
 
     //----- For displaying Customer specific menu -----
     public boolean displayCustomerMenu() throws SQLException, ParseException {
-        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Book a Parking Slot.\n2. View My Bookings\n3: Exit ParkingPool.\nEnter your command: ");
+        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: View Parking Slots.\n2. View My Bookings\n3: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
         int input = Integer.parseInt(sc.nextLine());
         switch (input) {

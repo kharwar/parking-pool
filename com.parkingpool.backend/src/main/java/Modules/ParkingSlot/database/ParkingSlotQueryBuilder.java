@@ -45,4 +45,9 @@ public class ParkingSlotQueryBuilder implements ParkingSlotQueryBuilderDAO{
     public String DeleteParkingSlotQueryBuilder(int parkingSlotId, int userId) {
         return "DELETE FROM ParkingSlot WHERE id="+parkingSlotId+" AND owner_user_id="+userId;
     }
+
+    @Override
+    public String FindParkingSlotByIdQueryBuilder(int parkingSlotId) {
+        return "SELECT * FROM ParkingSlot WHERE id="+parkingSlotId;
+    }
 }

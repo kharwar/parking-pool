@@ -12,5 +12,6 @@ public interface ParkingSlotQueryBuilderDAO {
 
     String FindAllParkingSlotsQueryBuilder();
     String DeleteParkingSlotQueryBuilder(int parkingSlotId, int userId);
+    String FindParkingSlotByIdQueryBuilder(int parkingSlotId);
 }
 
