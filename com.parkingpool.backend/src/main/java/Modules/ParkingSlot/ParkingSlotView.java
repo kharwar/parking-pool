@@ -1,6 +1,7 @@
 package Modules.ParkingSlot;
 
 import Modules.Analytics.AnalyticsView;
+import Modules.Booking.BookingView;
 import Modules.Booking.controller.BookingController;
 import Modules.Booking.model.Booking;
 import Modules.ParkingSlot.Utils.ParkingSlotUtils;
@@ -128,8 +129,6 @@ public class ParkingSlotView {
                         BookAParkingSlot(parkingId, date, startTime, endTime);
                         break;
                     case 2:
-                        Constants.printAndSpeak("Enter the ID of the Parking Slot you want to review: ");
-                        int reviewParkingId = Integer.parseInt(sc.nextLine());
                         ReviewsAndRatingsView reviewsAndRatingsView = new ReviewsAndRatingsView();
                         reviewsAndRatingsView.displayAddReview();
                         break;
@@ -148,6 +147,8 @@ public class ParkingSlotView {
             case 2:
                 BookingController bookingController = new BookingController();
                 bookingController.viewMyBookings();
+                BookingView bookingView = new BookingView();
+                bookingView.displayModifyBookingMenu();
                 break;
             case 3:
                 Constants.printAndSpeak("See you soon!");
@@ -220,7 +221,7 @@ public class ParkingSlotView {
 
     //Displays Edit Parking Slot Menu of the logged in user
     private int displayEditParkingSlotMenu() {
-        Constants.printAndSpeak("*** My Bookings ***\n1. Delete a Parking Slot.\n2. View Reviews.\n3. Go back.\nEnter your command: ");
+        Constants.printAndSpeak("*** My Parking Slots ***\n1. Delete a Parking Slot.\n2. View Reviews.\n3. Go back.\nEnter your command: ");
         return Integer.parseInt(sc.nextLine().trim());
     }
 

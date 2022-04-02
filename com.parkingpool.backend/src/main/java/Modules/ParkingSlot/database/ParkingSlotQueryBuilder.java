@@ -2,6 +2,8 @@ package Modules.ParkingSlot.database;
 
 import Modules.ParkingSlot.model.ParkingSlot;
 
+import java.sql.Time;
+
 public class ParkingSlotQueryBuilder implements ParkingSlotQueryBuilderDAO{
 
     private static ParkingSlotQueryBuilder parkingSlotQueryBuilder;
@@ -24,8 +26,10 @@ public class ParkingSlotQueryBuilder implements ParkingSlotQueryBuilderDAO{
     double latitude,
     double hourly_rate,
     int is_on_street,
-    int owner_user_id) {
-        return "INSERT INTO ParkingSlot (distance_from_elevator, address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id) VALUES('"+
+    int owner_user_id,
+    Time start_time,
+    Time end_time) {
+        return "INSERT INTO ParkingSlot (distance_from_elevator, address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id, start_time, end_time) VALUES('"+
                 distance_from_elevator + "','" +
                 address + "','" +
                 is_handicap + "','" +
@@ -33,7 +37,9 @@ public class ParkingSlotQueryBuilder implements ParkingSlotQueryBuilderDAO{
                 latitude+"','"+
                 hourly_rate+"','"+
                 is_on_street+"','"+
-                owner_user_id+"')";
+                owner_user_id+"',"+
+                "'"+start_time+"',"+
+                "'"+end_time+"')";
     }
 
     @Override

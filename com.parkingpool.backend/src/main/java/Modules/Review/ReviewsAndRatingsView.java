@@ -46,7 +46,7 @@ public class ReviewsAndRatingsView {
 
         int userId = Constants.loggedInUser.user_id;
 
-        Constants.printAndSpeak("Enter the parking id: ");
+        Constants.printAndSpeak("Enter the ID of the Parking Slot you want to review: ");
         int parkingID = Integer.parseInt(sc.nextLine());
 
         Constants.printAndSpeak("Enter the review: ");
