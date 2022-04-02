@@ -129,11 +129,12 @@ public class BookingController {
     }
 
     public boolean delete_booking(String booking_reference_id) throws SQLException {
-        String query = "Delete from " + tablename + "Where reference_id=" + booking_reference_id;
+        String query = "Delete from " + tablename + " Where reference_id='" + booking_reference_id + "'";
 
         try{
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            st.execute(query);
+            Constants.printAndSpeak("Booking cancelled Successfully");
             return true;
         } catch (SQLException ex){
             ex.printStackTrace();
