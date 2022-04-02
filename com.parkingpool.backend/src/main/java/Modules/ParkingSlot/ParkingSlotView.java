@@ -10,6 +10,8 @@ import Modules.ParkingSlot.controller.FindParkingSlots;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilder;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import Modules.ParkingSlot.model.ParkingSlot;
+import Modules.Review.ReviewsAndRatingsView;
+import Modules.Review.controller.AddReviewsAndRatings;
 import Modules.User.model.USER_TYPE;
 import Modules.User.model.User;
 import Utils.Constants;
@@ -33,14 +35,14 @@ public class ParkingSlotView {
     ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO = ParkingSlotQueryBuilder.getInstance();
 
     // ----- PUBLIC ITEMS -----
-    public ParkingSlotView(User user){
+    public ParkingSlotView(User user) {
         loggedInUser = user;
         Constants.setParkingSlotQueryBuilderDao(parkingSlotQueryBuilderDAO);
     }
 
     public boolean displayParkingSlotMenu() throws SQLException, ParseException {
         boolean toContinue = true;
-        switch (loggedInUser.role){
+        switch (loggedInUser.role) {
             case VENDOR:
                 toContinue = displayVendorMenu();
                 break;
@@ -58,14 +60,13 @@ public class ParkingSlotView {
     }
 
 
-
     // ----- PRIVATE ITEMS -----
     // ----- For displaying Vendor specific menu -----
-    private boolean displayVendorMenu(){
+    private boolean displayVendorMenu() {
         Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Add Parking Slot.\n2: View My Parking Slots.\n3: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
         int input = Integer.parseInt(sc.nextLine());
-        switch (input){
+        switch (input) {
             case 1:
                 AddParkingSlot addParkingSlot = new AddParkingSlot(parkingSlotQueryBuilderDAO);
                 addParkingSlot.AddParkingSlots(addParkingSlotDetails());
@@ -95,8 +96,8 @@ public class ParkingSlotView {
     public boolean displayCustomerMenu() throws SQLException, ParseException {
         Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Book a Parking Slot.\n2. View My Bookings\n3: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
-        int input =  Integer.parseInt(sc.nextLine());
-        switch(input){
+        int input = Integer.parseInt(sc.nextLine());
+        switch (input) {
             case 1:
                 FindParkingSlots findParkingSlots = new FindParkingSlots();
                 Constants.printAndSpeak("Enter the Google Maps URL of the location you want to find nearby parking locations to: ");
@@ -117,20 +118,26 @@ public class ParkingSlotView {
                 ArrayList<ParkingSlot> foundParkingSlots = findParkingSlots.findAvailableParkingSlots(longitude, latitude, date, startTime, endTime, handicappedAccessible);
 
                 ParkingSlotUtils.viewParkingSlots(foundParkingSlots);
-                Constants.printAndSpeak("Enter the following numbers to access the corresponding item: \n1. Book a Parking Slot from above\n2. Sort according to rate\n3. Sort according to distance from elevator.\n4. Go Back\nEnter your command: ");
+                Constants.printAndSpeak("Enter the following numbers to access the corresponding item: \n1. Book a Parking Slot from above\n2. Write a review.\n3. Sort according to rate\n4. Sort according to distance from elevator.\n5. Go Back\nEnter your command: ");
                 int bookInput = Integer.parseInt(sc.nextLine());
 
-                switch (bookInput){
+                switch (bookInput) {
                     case 1:
                         Constants.printAndSpeak("Enter the selected Parking ID: ");
                         int parkingId = Integer.parseInt(sc.nextLine());
                         BookAParkingSlot(parkingId, date, startTime, endTime);
                         break;
                     case 2:
+                        Constants.printAndSpeak("Enter the ID of the Parking Slot you want to review: ");
+                        int reviewParkingId = Integer.parseInt(sc.nextLine());
+                        ReviewsAndRatingsView reviewsAndRatingsView = new ReviewsAndRatingsView();
+                        reviewsAndRatingsView.displayAddReview();
+                        break;
+                    case 3:
                         ArrayList<ParkingSlot> sortedRateParkingSlots = findParkingSlots.sortAccordingToRate(foundParkingSlots);
                         ParkingSlotUtils.viewParkingSlots(sortedRateParkingSlots);
                         break;
-                    case 3:
+                    case 4:
                         ArrayList<ParkingSlot> sortedDistanceFromElevatorParkingSlots = findParkingSlots.sortAccordingToDistanceFromElevator(foundParkingSlots);
                         ParkingSlotUtils.viewParkingSlots(sortedDistanceFromElevatorParkingSlots);
                     default:
@@ -156,7 +163,7 @@ public class ParkingSlotView {
         boolean toContinue = true;
         Constants.printAndSpeak("Enter the following number to access the corresponding item:\n1. Show Analysis of the data for ParkingPool\n2. Generate a Spreadsheet for the analytics\n3. Exit ParkingPool");
         int input = Integer.parseInt(sc.nextLine());
-        switch(input){
+        switch (input) {
             case 1:
                 analyticsView.showAnalytics();
                 toContinue = true;
@@ -179,39 +186,46 @@ public class ParkingSlotView {
 
     //Displays All Parking Slots of the loggedIn User.
     private void displayMyParkingSlots() throws SQLException {
-        if(loggedInUser.role != USER_TYPE.VENDOR){
+        if (loggedInUser.role != USER_TYPE.VENDOR) {
             Constants.printAndSpeak("User is not a Vendor!");
         } else {
-            String myParkingSlotsQuery = "SELECT * from ParkingSlot where owner_user_id="+loggedInUser.user_id;
+            String myParkingSlotsQuery = "SELECT * from ParkingSlot where owner_user_id=" + loggedInUser.user_id;
             ResultSet myParkingSlotsResultSet = stmt.executeQuery(myParkingSlotsQuery);
             ArrayList<ParkingSlot> myParkingSlots = ParkingSlotUtils.ResultSetToParkingSlot(myParkingSlotsResultSet);
             ParkingSlotUtils.viewParkingSlots(myParkingSlots);
-            int selectedItem  = displayEditParkingSlotMenu();
-            switch(selectedItem){
-                case 1:
-                    DeleteParkingSlot deleteParkingSlot = new DeleteParkingSlot(parkingSlotQueryBuilderDAO);
-                    Constants.printAndSpeak("Enter the Parking Slot ID you want to delete: ");
-                    deleteParkingSlot.deleteParkingSlot(Integer.parseInt(sc.nextLine()), loggedInUser.user_id);
-                    break;
-                case 2:
-                    displayVendorMenu();
-                    break;
-                default:
-                    Constants.printAndSpeak("Selected option not recognized.");
-                    displayVendorMenu();
-                    break;
+            boolean toContinue = true;
+            while (toContinue) {
+                int selectedItem = displayEditParkingSlotMenu();
+                switch (selectedItem) {
+                    case 1:
+                        DeleteParkingSlot deleteParkingSlot = new DeleteParkingSlot(parkingSlotQueryBuilderDAO);
+                        Constants.printAndSpeak("Enter the Parking Slot ID you want to delete: ");
+                        deleteParkingSlot.deleteParkingSlot(Integer.parseInt(sc.nextLine()), loggedInUser.user_id);
+                        toContinue = true;
+                        break;
+                    case 2:
+                        ReviewsAndRatingsView reviewsAndRatingsView = new ReviewsAndRatingsView();
+                        Constants.printAndSpeak("Enter the Parking Slot ID you want to view reviews for: ");
+                        reviewsAndRatingsView.displayReviewByParkingId(Integer.parseInt(sc.nextLine()));
+                        toContinue = true;
+                        break;
+                    default:
+                        toContinue = false;
+                        Constants.printAndSpeak("Going back to previous menu!\n");
+                        break;
+                }
             }
         }
     }
 
     //Displays Edit Parking Slot Menu of the logged in user
-    private int displayEditParkingSlotMenu(){
-        Constants.printAndSpeak("** Edit Parking Slots Menu **\n1. Delete a Parking Slot.\n2. Go back\nEnter your command: ");
+    private int displayEditParkingSlotMenu() {
+        Constants.printAndSpeak("*** My Bookings ***\n1. Delete a Parking Slot.\n2. View Reviews.\n3. Go back.\nEnter your command: ");
         return Integer.parseInt(sc.nextLine().trim());
     }
 
     // This method will fetch all the parking slot details from the user and return a ParkingSlot.
-    private ParkingSlot addParkingSlotDetails(){
+    private ParkingSlot addParkingSlotDetails() {
         Constants.printAndSpeak("Enter Google Map URL of the location: ");
         String googleMap = sc.nextLine().trim();
 
@@ -245,8 +259,8 @@ public class ParkingSlotView {
         return parkingSlot;
     }
 
-    private void BookAParkingSlot(int parking_Id, Date date, LocalTime start_time, LocalTime end_time){
-        Booking booking =  new Booking();
+    private void BookAParkingSlot(int parking_Id, Date date, LocalTime start_time, LocalTime end_time) {
+        Booking booking = new Booking();
         booking.setBooking_date((java.sql.Date) date);
         booking.setParking_id(parking_Id);
         booking.setStart_time(Time.valueOf(start_time));
@@ -254,11 +268,10 @@ public class ParkingSlotView {
         booking.setUser_id(loggedInUser.user_id);
         booking.setOwner_id(2);
 
-        BookingController bookingUtilities =  new BookingController();
-        try{
+        BookingController bookingUtilities = new BookingController();
+        try {
             bookingUtilities.book_slot(booking);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
