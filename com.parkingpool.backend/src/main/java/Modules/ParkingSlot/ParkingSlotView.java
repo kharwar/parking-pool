@@ -158,6 +158,10 @@ public class ParkingSlotView {
                 Constants.printAndSpeak("See you soon!");
                 System.exit(0);
                 break;
+            default:
+                Constants.printAndSpeak("Incorrect input.");
+                displayCustomerMenu();
+                break;
         }
         return toContinue;
     }
