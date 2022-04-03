@@ -13,6 +13,8 @@ import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import Modules.ParkingSlot.model.ParkingSlot;
 import Modules.Review.ReviewsAndRatingsView;
 import Modules.Review.controller.AddReviewsAndRatings;
+import Modules.Ticket.TicketView;
+import Modules.Ticket.model.Ticket;
 import Modules.User.model.USER_TYPE;
 import Modules.User.model.User;
 import Utils.Constants;
@@ -95,7 +97,7 @@ public class ParkingSlotView {
 
     //----- For displaying Customer specific menu -----
     public boolean displayCustomerMenu() throws SQLException, ParseException {
-        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: View Parking Slots.\n2. View My Bookings\n3: Exit ParkingPool.\nEnter your command: ");
+        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: View Parking Slots.\n2. View My Bookings\n3. Raise a ticket. \n4: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
         int input = Integer.parseInt(sc.nextLine());
         switch (input) {
@@ -151,6 +153,10 @@ public class ParkingSlotView {
                 bookingView.displayModifyBookingMenu();
                 break;
             case 3:
+                TicketView ticketView = new TicketView();
+                ticketView.createTicket();
+                break;
+            case 4:
                 Constants.printAndSpeak("See you soon!");
                 System.exit(0);
                 break;
@@ -174,10 +180,14 @@ public class ParkingSlotView {
                 toContinue = true;
                 break;
             case 3:
+                TicketView ticketView = new TicketView();
+                ticketView.displayAdminTicketMenu();
+                break;
+            case 4:
                 Constants.printAndSpeak("See you soon!");
                 toContinue = false;
                 break;
-            case 4:
+            default:
                 Constants.printAndSpeak("Unknown item accessed! Try again!");
                 toContinue = true;
                 break;
