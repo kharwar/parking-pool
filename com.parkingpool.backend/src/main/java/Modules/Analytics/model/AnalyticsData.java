@@ -1,12 +1,12 @@
 package Modules.Analytics.model;
 
 public class AnalyticsData {
-    public int parking_slot_id;
-    public double longitude;
-    public double latitude;
-    public double revenue_generated;
-    public double total_hours;
-    public String address;
+    private int parking_slot_id;
+    private double longitude;
+    private double latitude;
+    private double revenue_generated;
+    private double total_hours;
+    private String address;
 
     public String getAddress() {
         return address;

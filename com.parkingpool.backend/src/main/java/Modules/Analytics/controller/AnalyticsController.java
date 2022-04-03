@@ -2,6 +2,7 @@ package Modules.Analytics.controller;
 
 import Modules.Analytics.model.AnalyticsData;
 import Utils.Constants;
+import Utils.GoogleMap;
 import com.opencsv.CSVWriter;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public class AnalyticsController {
 
             for(AnalyticsData ad: l)
             {
-                String[] data1 = {String.valueOf(ad.parking_slot_id), ad.address, getLocationString(ad.longitude,ad.latitude), String.valueOf(ad.revenue_generated), String.valueOf(ad.total_hours)};
+                String[] data1 = {String.valueOf(ad.getLongitude()), ad.getAddress(), GoogleMap.generateUrl(ad.getAddress()), String.valueOf(ad.getRevenue_generated()), String.valueOf(ad.getTotal_hours())};
                 writer.writeNext(data1);
             }
 

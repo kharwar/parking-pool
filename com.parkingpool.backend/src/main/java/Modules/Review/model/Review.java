@@ -1,12 +1,14 @@
 package Modules.Review.model;
 
 public class Review {
+
     private int review_id;
     private int userID;
     private int parkingID;
     private String reviews;
-    private int ratings;
-    public Review(int review_id, int userID, int parkingID, String reviews, int ratings)
+    private double ratings;
+    public Review(int review_id, int userID, int parkingID, String reviews, double ratings)
+
     {
         this.review_id = review_id;
         this.userID = userID;
@@ -47,7 +49,7 @@ public class Review {
         this.reviews = reviews;
     }
 
-    public int getRatings() {
+    public double getRatings() {
         return ratings;
     }
 

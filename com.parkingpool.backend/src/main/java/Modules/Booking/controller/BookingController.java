@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import Modules.Booking.BookingView;
 import Modules.User.model.User;
 import Utils.Constants;
 import Modules.Booking.model.Booking;
@@ -23,7 +24,12 @@ public class BookingController {
 
 
     public ArrayList<Booking> viewMyBookings(){
-        //TODO: FOR BHAVNA
+        BookingView bookingView = new BookingView();
+        try{
+            bookingView.displayBookings(get_booking("client_user_id",String.valueOf(loggedInUser.user_id)));
+        } catch(Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -169,11 +175,12 @@ public class BookingController {
      *
      */
     public boolean delete_booking(String booking_reference_id) throws SQLException {
-        String query = "Delete from " + tablename + "Where reference_id=" + booking_reference_id;
+        String query = "Delete from " + tablename + " Where reference_id='" + booking_reference_id + "'";
 
         try{
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            st.execute(query);
+            Constants.printAndSpeak("Booking cancelled Successfully");
             return true;
         } catch (SQLException ex){
             ex.printStackTrace();

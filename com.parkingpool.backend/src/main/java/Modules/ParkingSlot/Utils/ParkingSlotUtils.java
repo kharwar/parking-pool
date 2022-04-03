@@ -3,6 +3,7 @@ package Modules.ParkingSlot.Utils;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import Modules.ParkingSlot.model.ParkingSlot;
 import Utils.Constants;
+import Utils.GoogleMap;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class ParkingSlotUtils {
 
     public ArrayList<ParkingSlot> FindAllParkingSlots() throws SQLException {
         String findAllParkingSlotQuery = parkingSlotQueryBuilderDAO.FindAllParkingSlotsQueryBuilder();
-        ResultSet parkingSlotResultSet = stmt.executeQuery(findAllParkingSlotQuery);
+        ResultSet parkingSlotResultSet = Constants.stmt.executeQuery(findAllParkingSlotQuery);
         ArrayList<ParkingSlot> parkingSlots = ResultSetToParkingSlot(parkingSlotResultSet);
         return parkingSlots;
     }
@@ -41,7 +42,9 @@ public class ParkingSlotUtils {
                     parkingSlotResultSet.getDouble("latitude"),
                     parkingSlotResultSet.getDouble("hourly_rate"),
                     parkingSlotResultSet.getInt("is_on_street"),
-                    parkingSlotResultSet.getInt("owner_user_id")
+                    parkingSlotResultSet.getInt("owner_user_id"),
+                    parkingSlotResultSet.getTime("start_time"),
+                    parkingSlotResultSet.getTime("end_time")
             ));
         }
         return parkingSlots;
@@ -59,7 +62,17 @@ public class ParkingSlotUtils {
             System.out.println("Hourly Rate: " + parkingSlot.hourly_rate);
             System.out.println("Longitude: " + parkingSlot.longitude);
             System.out.println("Latitude: " + parkingSlot.latitude);
+            System.out.println("Start Time: " + parkingSlot.start_time);
+            System.out.println("End Time: " + parkingSlot.end_time);
+            System.out.println("Google Maps: " + GoogleMap.generateUrl(parkingSlot.address));
             System.out.println("-------------------------------------------------------------------------");
         };
+    }
+
+    public ParkingSlot getParkingSlotById(int id) throws SQLException {
+        String findParkingSlotByIdQuery = parkingSlotQueryBuilderDAO.FindParkingSlotByIdQueryBuilder(id);
+        ResultSet parkingSlotResultSet = stmt.executeQuery(findParkingSlotByIdQuery);
+        ParkingSlot parkingSlot = ResultSetToParkingSlot(parkingSlotResultSet).get(0);
+        return parkingSlot;
     }
 }
