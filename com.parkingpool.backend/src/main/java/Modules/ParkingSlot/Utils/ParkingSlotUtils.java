@@ -18,7 +18,7 @@ public class ParkingSlotUtils {
 
     public ArrayList<ParkingSlot> FindAllParkingSlots() throws SQLException {
         String findAllParkingSlotQuery = parkingSlotQueryBuilderDAO.FindAllParkingSlotsQueryBuilder();
-        ResultSet parkingSlotResultSet = stmt.executeQuery(findAllParkingSlotQuery);
+        ResultSet parkingSlotResultSet = Constants.stmt.executeQuery(findAllParkingSlotQuery);
         ArrayList<ParkingSlot> parkingSlots = ResultSetToParkingSlot(parkingSlotResultSet);
         return parkingSlots;
     }
@@ -67,5 +67,12 @@ public class ParkingSlotUtils {
             System.out.println("Google Maps: " + GoogleMap.generateUrl(parkingSlot.address));
             System.out.println("-------------------------------------------------------------------------");
         };
+    }
+
+    public ParkingSlot getParkingSlotById(int id) throws SQLException {
+        String findParkingSlotByIdQuery = parkingSlotQueryBuilderDAO.FindParkingSlotByIdQueryBuilder(id);
+        ResultSet parkingSlotResultSet = stmt.executeQuery(findParkingSlotByIdQuery);
+        ParkingSlot parkingSlot = ResultSetToParkingSlot(parkingSlotResultSet).get(0);
+        return parkingSlot;
     }
 }

@@ -72,5 +72,3 @@ deploy:
   only:
     - dev
     - main
-    - test
-

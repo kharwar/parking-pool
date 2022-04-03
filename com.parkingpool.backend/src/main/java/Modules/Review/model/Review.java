@@ -5,8 +5,8 @@ public class Review {
     public int userID;
     public int parkingID;
     public String reviews;
-    public int ratings;
-    public Review(int review_id, int userID, int parkingID, String reviews, int ratings)
+    public double ratings;
+    public Review(int review_id, int userID, int parkingID, String reviews, double ratings)
     {
         this.review_id = review_id;
         this.userID = userID;
