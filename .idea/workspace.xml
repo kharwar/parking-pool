@@ -5,7 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5121d682-c157-44b8-8b94-b652c6761db9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/com.parkingpool.backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DB/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/DB/DBConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DB/DBInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/DB/DBInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Analytics/AnalyticsView.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Analytics/AnalyticsView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Analytics/controller/AnalyticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Analytics/controller/AnalyticsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Analytics/model/AnalyticsData.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Analytics/model/AnalyticsData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Booking/BookingView.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Booking/BookingView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Booking/controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Booking/controller/BookingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Booking/model/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Booking/model/Booking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/ParkingSlot/ParkingSlotView.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/ParkingSlot/ParkingSlotView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/ParkingSlot/Utils/ParkingSlotUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/ParkingSlot/Utils/ParkingSlotUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/ParkingSlot/controller/AddParkingSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/ParkingSlot/controller/AddParkingSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/ParkingSlot/controller/DeleteParkingSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/ParkingSlot/controller/DeleteParkingSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/ParkingSlot/controller/FindParkingSlots.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/ParkingSlot/controller/FindParkingSlots.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/ParkingSlot/database/ParkingSlotQueryBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/ParkingSlot/database/ParkingSlotQueryBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/ParkingSlot/database/ParkingSlotQueryBuilderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/ParkingSlot/database/ParkingSlotQueryBuilderDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/ParkingSlot/model/ParkingSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/ParkingSlot/model/ParkingSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Review/ReviewsAndRatingsView.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Review/ReviewsAndRatingsView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Review/controller/AddReviewsAndRatings.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Review/controller/AddReviewsAndRatings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Review/controller/DeleteReviewAndRating.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Review/controller/DeleteReviewAndRating.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Review/controller/UpdateReviewAndRating.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Review/controller/UpdateReviewAndRating.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Review/model/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Review/model/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Ticket/model/TICKET_STATUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Ticket/model/TICKET_STATUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/Ticket/model/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/Ticket/model/Ticket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/User/UserView.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/User/UserView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/User/Utils/UserUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/User/Utils/UserUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/User/controller/Hash.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/User/controller/Hash.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/User/controller/LogIn.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/User/controller/LogIn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/User/controller/SignUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/User/controller/SignUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/User/model/USER_TYPE.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/User/model/USER_TYPE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modules/User/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Modules/User/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ParkingPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/ParkingPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Utils/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Utils/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Utils/GoogleMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/main/java/Utils/GoogleMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Modules/Booking/BookingUtilitiesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/Modules/Booking/BookingUtilitiesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Modules/Booking/Booking_Integration_Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/Modules/Booking/Booking_Integration_Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Modules/ParkingSlot/ParkingSlotQueryBuilderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/Modules/ParkingSlot/ParkingSlotQueryBuilderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Modules/ParkingSlot/ParkingSlotTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/Modules/ParkingSlot/ParkingSlotTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Modules/ParkingSlot/ParkingSlotUtilsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/Modules/ParkingSlot/ParkingSlotUtilsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Modules/User/controller/HashTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/Modules/User/controller/HashTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Modules/User/controller/LogInTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/Modules/User/controller/LogInTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Modules/User/controller/SignUpTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/Modules/User/controller/SignUpTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Modules/User/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/Modules/User/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/com.parkingpool.backend/src/test/java/org/example/AppTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +59,19 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/pom.xml" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProjectId" id="25br5rcoxvNjlhOiOYJuygLMwsh" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -23,13 +80,15 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\DalU\Subjects\CSCI 5308 - Adv Topics in Soft Dev\Group Assignment\Client\parkingpool\com.parkingpool.backend" />
       <recent name="C:\Users\AVuser\IdeaProjects\parkingpool" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.ParkingPool">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="com.parkingpool.backend" />
@@ -43,19 +102,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
+    <configuration name="ParkingPool" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ParkingPool" />
+      <module name="com.parkingpool.backend" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ParkingPool" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
@@ -81,6 +137,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
