@@ -96,11 +96,6 @@ public class FindParkingSlots {
 
     // ----- PRIVATE ITEMS -----
     private boolean isParkingSlotAvailable(List<Integer> booked_parking_ids, ParkingSlot parkingSlot, LocalTime startTime, LocalTime endTime){
-        LocalTime parkingSlotStartTime = LocalTime.parse(parkingSlot.start_time.toString(), DateTimeFormatter.ofPattern("HH:mm:ss"));
-        LocalTime parkingSlotEndTime = LocalTime.parse(parkingSlot.end_time.toString(), DateTimeFormatter.ofPattern("HH:mm:ss"));
-//        System.out.println(parkingSlotStartTime.isAfter(endTime));
-        //TODO: Business hours for parking slot
         return (!booked_parking_ids.contains(parkingSlot.parking_slot_id));
-//        return (!booked_parking_ids.contains(parkingSlot.parking_slot_id)) && (parkingSlotStartTime.isBefore(startTime) && parkingSlotEndTime.isAfter(endTime));
     }
 }

@@ -104,7 +104,9 @@ public class BookingController {
             pst.execute();
 
             //sending success notification on user email
-            sendEmailNotification(loggedInUser.email, "Your Parking has been confirmed for date: " + new_slot.getBooking_date() + " from " + new_slot.getStart_time() + " to " + new_slot.getEnd_time());
+            String mailBody = "Your Parking has been confirmed for date: " + new_slot.getBooking_date() + " from " + new_slot.getStart_time() + " to " + new_slot.getEnd_time();
+            String mailSubject = "Parking Booking Confirmation";
+            sendEmailNotification(loggedInUser.email, mailBody, mailSubject);
         } catch (SQLException ex){
             ex.printStackTrace();
         }
@@ -197,7 +199,7 @@ public class BookingController {
      * Return: boolean status
      *
      */
-    public boolean sendEmailNotification(String email_id, String text){
+    public boolean sendEmailNotification(String email_id, String text, String subject) {
         final String username = "parkingpoolasdc@gmail.com";
         final String password = "abc@12345678";
 
@@ -222,7 +224,7 @@ public class BookingController {
                     Message.RecipientType.TO,
                     InternetAddress.parse(email_id)
             );
-            message.setSubject("Booking Confirmed with Parking Pool");
+            message.setSubject(subject);
             message.setText("Dear user, \n\n"
                     + text);
 
