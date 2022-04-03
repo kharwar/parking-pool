@@ -6,14 +6,13 @@ import Modules.Ticket.controller.UpdateTicketStatus;
 import Modules.Ticket.model.Ticket;
 import Modules.User.Utils.UserUtils;
 import Utils.Constants;
+import Utils.Scan;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Scanner;
 
 public class TicketView {
-    Scanner sc = Constants.sc;
     // ------ PUBLIC METHODS ------
     public void displayAdminTicketMenu() throws SQLException {
         Constants.printAndSpeak("\n     Welcome to the Ticket Menu");
@@ -21,7 +20,7 @@ public class TicketView {
         boolean toContinue = true;
         while(toContinue) {
 
-            switch (Integer.parseInt(sc.nextLine())) {
+            switch (Integer.parseInt(Scan.nextLine())) {
                 case 1:
                     viewTickets();
                     toContinue = true;
@@ -39,7 +38,7 @@ public class TicketView {
 
     public void createTicket(){
         Constants.printAndSpeak("\nPlease enter the issue you wish to report: ");
-        String issue = sc.nextLine();
+        String issue = Scan.nextLine();
 
         CreateTicket createTicket = new CreateTicket();
         createTicket.createTicket(issue);
@@ -76,6 +75,6 @@ public class TicketView {
     private void updateTicketStatus() {
         Constants.printAndSpeak("\nPlease enter the ticket ID you wish to update: ");
         UpdateTicketStatus updateTicketStatus = new UpdateTicketStatus();
-        updateTicketStatus.updateTicketStatus(Integer.parseInt(sc.nextLine()));
+        updateTicketStatus.updateTicketStatus(Integer.parseInt(Scan.nextLine()));
     }
 }
