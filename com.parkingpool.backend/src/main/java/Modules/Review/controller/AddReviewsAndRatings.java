@@ -9,50 +9,24 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class AddReviewsAndRatings {
-    Statement stmt = Constants.stmt;
-
-        private Review CreateReview() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the parking ID:");
-        int parkingID = Integer.parseInt(sc.nextLine());
-
-        System.out.println("Enter the Review:");
-        String reviews = sc.nextLine();
-
-        System.out.println("Enter the Ratings:");
-        int ratings = Integer.parseInt(sc.nextLine());
-
-        Review reviewobj = new Review(-1, Constants.loggedInUser.user_id, parkingID, reviews, ratings);
-        return reviewobj;
-        }
-        public void AddData()
-        {
-            Review review = CreateReview();
-            int parkingID = review.parkingID;
-            String reviews = review.reviews;
-            int ratings = review.ratings;
+        Statement stmt = Constants.stmt;
+        public boolean addReviewAndRating(Review review) {
+            int parkingId = review.parkingID;
             int userID = review.userID;
-
-            String insertQuery = "INSERT INTO reviews_and_ratings (parking_id, user_id, reviews, ratings) VALUES(" + parkingID + " , '"+userID+"' , '" + reviews + "' , '" + ratings + "');";
+            String reviews = review.reviews;
+            double ratings = review.ratings;
+            String addReviewAndRatingQuery = "INSERT INTO reviews_and_ratings (parking_id, user_id, reviews, ratings) VALUES(" + parkingId + " , '"+userID+"' , '" + reviews + "' , '" + ratings + "');";
             try {
-                stmt.executeUpdate(insertQuery);
+                boolean isAdded = stmt.execute(addReviewAndRatingQuery);
+                if(isAdded){
+                    System.out.println("Review and Rating added successfully");
+                    return true;
+                }
+                return false;
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
-        }
-        public void displayData () throws SQLException
-        {
-            String query = "Select user_id, reviews, ratings from reviews_and_ratings;";
-
-            ResultSet rs = stmt.executeQuery(query);
-            try {
-                while (rs.next()) {
-                    System.out.println("User ID:" + rs.getInt("user_id"));
-                    System.out.println("Reviews:" + rs.getString("reviews"));
-                    System.out.println("Ratings:" + rs.getInt("ratings"));
-                }
-            } catch (Exception e) {
-
+                System.out.println("Review and Rating not added");
+                return false;
             }
         }
 }

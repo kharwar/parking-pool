@@ -109,7 +109,7 @@ public class ParkingSlotTest {
         Assertions.assertDoesNotThrow(()->{
             Mockito.when(Constants.stmt.executeQuery(Mockito.anyString())).thenReturn(rs);
             Mockito.when(findParkingSlots.findNearbyParkingSlots(-63,-63)).thenReturn(arrayList);
-            findParkingSlots.findAvailableParkingSlots(-63.0,-63.0, date, LocalTime.of(2,40),LocalTime.of(3,49));
+            findParkingSlots.findAvailableParkingSlots(-63.0,-63.0, date, LocalTime.of(2,40),LocalTime.of(3,49), true);
         });
     }
 
@@ -119,7 +119,7 @@ public class ParkingSlotTest {
         ParkingSlot parkingSlot = Mockito.mock(ParkingSlot.class);
         arrayList.add(parkingSlot);
         Assertions.assertDoesNotThrow(()->{
-            findParkingSlots.filterAccordingToRate(arrayList);
+            findParkingSlots.sortAccordingToRate(arrayList);
         });
     }
 

@@ -6,6 +6,7 @@ import Utils.Constants;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 
 public class AddParkingSlot {
     Statement stmt = Constants.stmt;
@@ -24,6 +25,8 @@ public class AddParkingSlot {
         double hourly_rate = parkingSlot.hourly_rate;
         int is_on_street = parkingSlot.is_on_street;
         int owner_user_id = parkingSlot.owner_user_id;
+        Time start_time = parkingSlot.start_time;
+        Time end_time = parkingSlot.end_time;
 
         String addParkingSlotQuery = parkingSlotQueryBuilderDAO.AddParkingSlotQueryBuilder(
                 distance_from_elevator,
@@ -33,7 +36,9 @@ public class AddParkingSlot {
                 latitude,
                 hourly_rate,
                 is_on_street,
-                owner_user_id
+                owner_user_id,
+                start_time,
+                end_time
         );
         boolean isAdded = false;
         try {

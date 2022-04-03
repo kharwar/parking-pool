@@ -68,4 +68,11 @@ public class ParkingSlotUtils {
             System.out.println("-------------------------------------------------------------------------");
         };
     }
+
+    public ParkingSlot getParkingSlotById(int id) throws SQLException {
+        String findParkingSlotByIdQuery = parkingSlotQueryBuilderDAO.FindParkingSlotByIdQueryBuilder(id);
+        ResultSet parkingSlotResultSet = stmt.executeQuery(findParkingSlotByIdQuery);
+        ParkingSlot parkingSlot = ResultSetToParkingSlot(parkingSlotResultSet).get(0);
+        return parkingSlot;
+    }
 }

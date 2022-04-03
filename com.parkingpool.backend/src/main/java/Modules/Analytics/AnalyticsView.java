@@ -4,6 +4,7 @@ import Modules.Analytics.controller.AnalyticsController;
 import Modules.Analytics.model.AnalyticsData;
 import Modules.User.model.USER_TYPE;
 import Utils.Constants;
+import Utils.GoogleMap;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,11 +26,12 @@ public class AnalyticsView {
 
         for(AnalyticsData ad: l)
         {
-            System.out.println("parking slot: "+ad.parking_slot_id);
-            System.out.println("address: "+ad.address);
-            System.out.println("location: "+"https://www.google.com/maps/@"+ad.longitude+","+ad.latitude+",15z");
-            System.out.println("revenue generated: "+ad.revenue_generated);
-            System.out.println("total hours: "+ad.total_hours);
+            System.out.println("-------------------------------------------------------------------------");
+            System.out.println("Parking Slot ID: "+ ad.getParking_slot_id());
+            System.out.println("Address: " + ad.getAddress());
+            System.out.println("Location: "+ GoogleMap.generateUrl(ad.getAddress()));
+            System.out.println("Revenue Generated: "+ ad.getRevenue_generated());
+            System.out.println("Total Hours: "+ ad.getTotal_hours());
             System.out.println();
         }
     }
