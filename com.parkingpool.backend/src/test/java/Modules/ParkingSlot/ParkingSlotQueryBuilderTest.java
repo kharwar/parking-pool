@@ -24,8 +24,24 @@ public class ParkingSlotQueryBuilderTest {
 
         final ParkingSlotQueryBuilder parkingSlotQueryBuilder = ParkingSlotQueryBuilder.getInstance();
         final String actualQuery = parkingSlotQueryBuilder.AddParkingSlotQueryBuilder(distance_from_elevator, address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id, start_time, end_time);
-        final String expectedQuery = "INSERT INTO ParkingSlot (address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id) VALUES('6225 University Ave, Halifax, NS B3H 4R2','1','44.6374007','-63.5933855','12.95','0','6','08:00:00','20:00:00');";
+        final String expectedQuery = "INSERT INTO ParkingSlot (distance_from_elevator, address, is_handicap, longitude, latitude, hourly_rate, is_on_street, owner_user_id, start_time, end_time) VALUES('0','6225 University Ave, Halifax, NS B3H 4R2','1','44.6374007','-63.5933855','12.95','0','6','08:00:00','20:00:00')";
         Assertions.assertEquals(expectedQuery, actualQuery);
+    }
+
+    @Test
+    public void testFindallSlotsqueryBuilder(){
+        final ParkingSlotQueryBuilder parkingSlotQueryBuilder = ParkingSlotQueryBuilder.getInstance();
+        final String actualQuery = parkingSlotQueryBuilder.FindAllParkingSlotsQueryBuilder();
+        final String expectedquery = "SELECT * from ParkingSlot";
+        Assertions.assertEquals(expectedquery, actualQuery);
+    }
+
+    @Test
+    public void testDeleteParkingSlot(){
+        final ParkingSlotQueryBuilder parkingSlotQueryBuilder = ParkingSlotQueryBuilder.getInstance();
+        final String actualQuery = parkingSlotQueryBuilder.DeleteParkingSlotQueryBuilder(2,6);
+        final String expectedQuery = "DELETE FROM ParkingSlot WHERE id=2 AND owner_user_id=6";
+        Assertions.assertEquals(actualQuery,expectedQuery);
     }
 
 }
