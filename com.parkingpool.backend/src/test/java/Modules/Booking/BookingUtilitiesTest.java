@@ -98,14 +98,14 @@ class BookingUtilitiesTest {
         b.setStart_time(new Time(1340));
         b.setParking_id(12);
 
+
         Assertions.assertEquals(b.getOwner_id(),1);
         Assertions.assertEquals(b.getUser_id(),2);
         Assertions.assertEquals(b.getParking_id(),12);
-
-        BookingView bookingView = new BookingView();
-        ArrayList<Booking> arrayList = new ArrayList<>();
-        arrayList.add(b);
-        bookingView.displayBookings(arrayList);
-
+        Assertions.assertDoesNotThrow(()->{
+            b.getBooking_date();
+            b.getStart_time();
+            b.getEnd_time();
+        });
     }
 }
