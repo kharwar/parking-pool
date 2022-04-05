@@ -9,10 +9,10 @@ import java.sql.Statement;
 public class AddReviewsAndRatings {
         Statement stmt = Constants.stmt;
         public boolean addReviewAndRating(Review review) {
-            int parkingId = review.parkingID;
-            int userID = review.userID;
-            String reviews = review.reviews;
-            double ratings = review.ratings;
+            int parkingId = review.getParkingID();
+            int userID = review.getUserID();
+            String reviews = review.getReviews();
+            double ratings = review.getRatings();
             String addReviewAndRatingQuery = "INSERT INTO reviews_and_ratings (parking_id, user_id, reviews, ratings) VALUES(" + parkingId + " , '"+userID+"' , '" + reviews + "' , '" + ratings + "');";
             try {
                 boolean isAdded = stmt.execute(addReviewAndRatingQuery);

@@ -1,21 +1,23 @@
-import DB.*;
-
+import DB.DBConnection;
+import DB.DBInterface;
 import Modules.ParkingSlot.ParkingSlotView;
 import Modules.User.UserView;
 import Modules.User.model.User;
 import Utils.Constants;
+import Utils.Scan;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
-import java.util.Scanner;
 
 public class ParkingPool {
 
     public static void main(String[] args) throws SQLException, ParseException {
-        Connection conn=null;//use conn for connection
-        Statement stmt=null;//use stmt for statement
+        Connection conn=null;
+        Statement stmt=null;
         DBInterface dbi = DBConnection.getInstance();
-        Scanner sc= new Scanner(System.in);//use sc for scanner
+
         boolean IsLoggedIn=false;
         try {
             conn = dbi.getDBConnection();
@@ -27,9 +29,9 @@ public class ParkingPool {
             e.printStackTrace();
             System.exit(0);
         }
-        //start from here
+
         Constants.printAndSpeak("Do you want to turn the Voice Synthesizer on? Yes or No:");
-        boolean synthesizerSwitch = sc.nextLine().toUpperCase().startsWith("Y");
+        boolean synthesizerSwitch = Scan.nextLine().toUpperCase().startsWith("Y");
         Constants.toggleSynthesizer(synthesizerSwitch);
 
         UserView uv = new UserView();
@@ -37,7 +39,7 @@ public class ParkingPool {
         while(!IsLoggedIn) {
             Constants.printAndSpeak("Please enter the numbers given below to perform the following action:\n1: SignUp\n2: Login");
             Constants.printAndSpeak("Enter your command: ");
-            int inputt = sc.nextInt();
+            int inputt = Integer.parseInt(Scan.nextLine());
             if(inputt==1) {
                 try {
                     uv.signUp(stmt);

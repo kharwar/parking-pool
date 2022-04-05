@@ -5,10 +5,10 @@ import Modules.Analytics.model.AnalyticsData;
 import Modules.User.model.USER_TYPE;
 import Utils.Constants;
 import Utils.GoogleMap;
+import Utils.Scan;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class AnalyticsView {
 
@@ -37,11 +37,10 @@ public class AnalyticsView {
     }
 
     public void createAnalyticsCSV() {
-        Scanner sc= new Scanner(System.in);
         AnalyticsController ac = new AnalyticsController();
 
         Constants.printAndSpeak("Please Enter folder Path: ");
-        String path = sc.nextLine();
+        String path = Scan.nextLine();
 
         try {
             ac.createAnalyticsInCSVFormat(path);

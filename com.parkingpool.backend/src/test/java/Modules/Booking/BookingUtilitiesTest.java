@@ -6,7 +6,6 @@ import Modules.User.model.User;
 import Utils.Constants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
@@ -14,11 +13,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 import static org.mockito.Mockito.mock;
 
@@ -39,7 +36,7 @@ class BookingUtilitiesTest {
             Mockito.when(Constants.conn.prepareStatement(Mockito.anyString())).thenReturn(preparedStatement);
             Constants.setUser(Mockito.mock(User.class));
             Constants.loggedInUser.email = "motobha@gamil.com";
-            Mockito.when(Mockito.mock(BookingController.class).sendEmailNotification(Constants.loggedInUser.email, "test")).thenReturn(true);
+            Mockito.when(Mockito.mock(BookingController.class).sendEmailNotification(Constants.loggedInUser.email, "test", "Test Subject")).thenReturn(true);
             bu.book_slot(booking);
         });
     }

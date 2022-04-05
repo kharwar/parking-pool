@@ -12,16 +12,13 @@ import Modules.ParkingSlot.database.ParkingSlotQueryBuilder;
 import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import Modules.ParkingSlot.model.ParkingSlot;
 import Modules.Review.ReviewsAndRatingsView;
+import Modules.Ticket.TicketView;
 import Modules.User.model.USER_TYPE;
 import Modules.User.model.User;
 import Utils.Constants;
 import Utils.GoogleMap;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Time;
-import java.sql.Date;
+import java.sql.*;
 import java.text.ParseException;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -94,7 +91,7 @@ public class ParkingSlotView {
 
     //----- For displaying Customer specific menu -----
     public boolean displayCustomerMenu() throws SQLException, ParseException {
-        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: View Parking Slots.\n2. View My Bookings\n3: Exit ParkingPool.\nEnter your command: ");
+        Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: View Parking Slots.\n2. View My Bookings\n3. Raise a ticket. \n4: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
         int input = Integer.parseInt(sc.nextLine());
         switch (input) {
@@ -150,8 +147,16 @@ public class ParkingSlotView {
                 bookingView.displayModifyBookingMenu();
                 break;
             case 3:
+                TicketView ticketView = new TicketView();
+                ticketView.createTicket();
+                break;
+            case 4:
                 Constants.printAndSpeak("See you soon!");
                 System.exit(0);
+                break;
+            default:
+                Constants.printAndSpeak("Incorrect input.");
+                displayCustomerMenu();
                 break;
         }
         return toContinue;
@@ -173,10 +178,14 @@ public class ParkingSlotView {
                 toContinue = true;
                 break;
             case 3:
+                TicketView ticketView = new TicketView();
+                ticketView.displayAdminTicketMenu();
+                break;
+            case 4:
                 Constants.printAndSpeak("See you soon!");
                 toContinue = false;
                 break;
-            case 4:
+            default:
                 Constants.printAndSpeak("Unknown item accessed! Try again!");
                 toContinue = true;
                 break;
