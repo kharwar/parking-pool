@@ -36,7 +36,8 @@ code-quality:
   stage: quality-check
   image: maven:3-jdk-11
   variables:
-    UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization: Token $QSCORED_API_KEY" + -H "username:vanshikagohel1@gmail.com" -H "Content-Type:   application/xml" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_PIPELINE_ID&project_name=parking_pool_project" -F "file=@DesigniteAnalysis.xml"'
+    DELETE_PREVIOUS_REPORT: 'curl -X POST -H "Authorization: Token $QSCORED_API_KEY" + -H "username: vanshikagohel1@gmail.com" -H "Content-Type: application/x-www-form-urlencoded" --url "https://qscored.com/api/delete/" -d "project_name=parking_pool_project&version=1.0.0"'
+    UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization: Token $QSCORED_API_KEY" + -H "username: vanshikagohel1@gmail.com" -H "Content-Type:   application/xml" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=1.0.0&project_name=parking_pool_project" -F "file=@DesigniteAnalysis.xml"'
   before_script:
     - apt-get update
     - apt-get install -y wget curl
@@ -47,8 +48,16 @@ code-quality:
     - ls -l
     - ls quality-check
     - cd quality-check
-    - eval "$UPLOAD_QUALITY_REPORT"
+    - echo "DELETING PREVIOUS REPORT"
+    - eval $DELETE_PREVIOUS_REPORT
+    - echo "UPLOADING NEW QUALITY REPORT"
     - echo "$UPLOAD_QUALITY_REPORT"
+    - eval "$UPLOAD_QUALITY_REPORT"
+
+  only:
+    - main
+    - test
+    - dev
 
 
 deploy:
@@ -71,4 +80,5 @@ deploy:
 
   only:
     - dev
+    - test
     - main
