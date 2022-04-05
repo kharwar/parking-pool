@@ -28,6 +28,22 @@ public class ParkingSlotQueryBuilderTest {
         Assertions.assertEquals(expectedQuery, actualQuery);
     }
 
+    @Test
+    public void testFindallSlotsqueryBuilder(){
+        final ParkingSlotQueryBuilder parkingSlotQueryBuilder = ParkingSlotQueryBuilder.getInstance();
+        final String actualQuery = parkingSlotQueryBuilder.FindAllParkingSlotsQueryBuilder();
+        final String expectedquery = "SELECT * from ParkingSlot";
+        Assertions.assertEquals(expectedquery, actualQuery);
+    }
+
+    @Test
+    public void testDeleteParkingSlot(){
+        final ParkingSlotQueryBuilder parkingSlotQueryBuilder = ParkingSlotQueryBuilder.getInstance();
+        final String actualQuery = parkingSlotQueryBuilder.DeleteParkingSlotQueryBuilder(2,6);
+        final String expectedQuery = "DELETE FROM ParkingSlot WHERE id=2 AND owner_user_id=6";
+        Assertions.assertEquals(actualQuery,expectedQuery);
+    }
+
 }
 
 

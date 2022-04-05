@@ -1,6 +1,5 @@
 package Modules.User.controller;
 
-import Modules.User.model.USER_TYPE;
 import Modules.User.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

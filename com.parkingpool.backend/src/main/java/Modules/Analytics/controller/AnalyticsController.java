@@ -9,13 +9,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import com.opencsv.CSVWriter;
-import java.io.*;
-
-
 import java.util.ArrayList;
 
 public class AnalyticsController {

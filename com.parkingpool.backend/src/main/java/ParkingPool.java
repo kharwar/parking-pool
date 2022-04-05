@@ -1,23 +1,15 @@
-import DB.*;
-
-import Modules.Analytics.AnalyticsView;
+import DB.DBConnection;
+import DB.DBInterface;
 import Modules.ParkingSlot.ParkingSlotView;
 import Modules.User.UserView;
 import Modules.User.model.User;
 import Utils.Constants;
 import Utils.Scan;
 
-import javax.speech.AudioException;
-import javax.speech.Central;
-import javax.speech.EngineException;
-import javax.speech.*;
-import javax.speech.synthesis.SynthesizerModeDesc;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class ParkingPool {
 

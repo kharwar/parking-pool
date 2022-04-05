@@ -4,7 +4,6 @@ import Modules.ParkingSlot.database.ParkingSlotQueryBuilderDAO;
 import Modules.User.model.User;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Locale;
 import java.util.Scanner;

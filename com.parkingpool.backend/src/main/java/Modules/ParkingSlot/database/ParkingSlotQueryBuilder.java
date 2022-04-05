@@ -1,7 +1,5 @@
 package Modules.ParkingSlot.database;
 
-import Modules.ParkingSlot.model.ParkingSlot;
-
 import java.sql.Time;
 
 public class ParkingSlotQueryBuilder implements ParkingSlotQueryBuilderDAO{

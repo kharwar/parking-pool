@@ -3,10 +3,8 @@ package Modules.Review.controller;
 import Modules.Review.model.Review;
 import Utils.Constants;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;
 
 public class AddReviewsAndRatings {
 

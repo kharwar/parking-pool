@@ -1,14 +1,13 @@
 package Modules.Booking;
 
 import Modules.Booking.controller.BookingController;
+import Modules.Booking.model.Booking;
 import Modules.ParkingSlot.Utils.ParkingSlotUtils;
 import Modules.ParkingSlot.model.ParkingSlot;
 import Utils.Constants;
-import Modules.Booking.model.Booking;
 import Utils.GoogleMap;
 
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;

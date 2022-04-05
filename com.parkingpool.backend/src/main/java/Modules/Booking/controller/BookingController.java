@@ -1,19 +1,18 @@
 package Modules.Booking.controller;
 
+import Modules.Booking.BookingView;
+import Modules.Booking.model.Booking;
+import Modules.User.model.User;
+import Utils.Constants;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Properties;
-
-import Modules.Booking.BookingView;
-import Modules.User.model.User;
-import Utils.Constants;
-import Modules.Booking.model.Booking;
-
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 
 public class BookingController {

@@ -1,10 +1,9 @@
 package Modules.User;
 
-import java.io.*;
-import Modules.User.controller.*;
+import Modules.User.controller.LogIn;
+import Modules.User.controller.SignUp;
 import Modules.User.model.User;
 import Utils.Constants;
-
 
 import java.sql.SQLException;
 import java.sql.Statement;

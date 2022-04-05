@@ -6,20 +6,16 @@ import Modules.User.model.User;
 import Utils.Constants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 import static org.mockito.Mockito.mock;
 
@@ -99,14 +95,14 @@ class BookingUtilitiesTest {
         b.setStart_time(new Time(1340));
         b.setParking_id(12);
 
+
         Assertions.assertEquals(b.getOwner_id(),1);
         Assertions.assertEquals(b.getUser_id(),2);
         Assertions.assertEquals(b.getParking_id(),12);
-
-        BookingView bookingView = new BookingView();
-        ArrayList<Booking> arrayList = new ArrayList<>();
-        arrayList.add(b);
-        bookingView.displayBookings(arrayList);
-
+        Assertions.assertDoesNotThrow(()->{
+            b.getBooking_date();
+            b.getStart_time();
+            b.getEnd_time();
+        });
     }
 }
