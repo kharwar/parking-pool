@@ -76,7 +76,6 @@ public class ParkingPool {
         }
 
         Constants.printAndSpeak("Exiting ParkingPool!");
-        //cd System.out.println("Done");
        try {
             dbi.clearDBConnection();
         }catch (SQLException e)

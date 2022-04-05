@@ -25,7 +25,6 @@ public class AnalyticsController {
 
             CSVWriter writer = new CSVWriter(outputfile);
 
-            // adding header to csv
             String[] header = { "Parking_slot_id", "Address", "Location_link","Revenue_generated","Total_Hours_of_use" };
             writer.writeNext(header);
 
@@ -35,7 +34,6 @@ public class AnalyticsController {
                 writer.writeNext(data1);
             }
 
-            // closing writer connection
             writer.close();
             outputfile.close();
         }
@@ -64,7 +62,6 @@ public class AnalyticsController {
         while(rs1.next())
         {
             AnalyticsData d = new AnalyticsData();
-            //System.out.println(rs1.getInt("id"));
 
             d.setParking_slot_id(rs1.getInt("id"));
             d.setLatitude(rs1.getDouble("latitude"));
@@ -79,7 +76,6 @@ public class AnalyticsController {
 
             a_list.add(d);
         }
-        //st.close();
         return a_list;
     }
 

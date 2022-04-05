@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AddReviewsAndRatings {
+
         Statement stmt = Constants.stmt;
         public boolean addReviewAndRating(Review review) {
             int parkingId = review.getParkingID();
@@ -14,6 +15,7 @@ public class AddReviewsAndRatings {
             String reviews = review.getReviews();
             double ratings = review.getRatings();
             String addReviewAndRatingQuery = "INSERT INTO reviews_and_ratings (parking_id, user_id, reviews, ratings) VALUES(" + parkingId + " , '"+userID+"' , '" + reviews + "' , '" + ratings + "');";
+
             try {
                 boolean isAdded = stmt.execute(addReviewAndRatingQuery);
                 if(isAdded){
