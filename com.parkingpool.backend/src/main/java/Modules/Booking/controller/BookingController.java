@@ -33,6 +33,15 @@ public class BookingController {
         return null;
     }
 
+    /*
+    * Description: Fetch all the bookings for a user from the database
+    *
+    * Parameters: search_key, search_value
+    *
+    * Return: List of booking objects
+    *
+     */
+
     public ArrayList<Booking> get_booking(String key, String Value) throws SQLException {
 
         String query = "Select * from " + tablename + " Where `"+key+"`="+Value;
@@ -59,13 +68,24 @@ public class BookingController {
         return b_list;
     }
 
+    /*
+     * Description: books a parking slot for the user by updating the database and sends email notification to user
+     *
+     * Parameters: Booking object with all the details
+     *
+     * Return: New Booking reference id
+     *
+     */
+
     public String book_slot(Booking new_slot) throws SQLException {
 
         if(new_slot.getReference_id() == null){
+            //creating a random ref Id which will be unique
             String ref = ""+new_slot.getUser_id()+"_"+(int)(Math.random()*1000);
             new_slot.setReference_id(ref);
         }
 
+        //Building unique insert query
         String query = "Insert into " + tablename +
                 " (reference_id, client_user_id, owner_user_id, parking_id, date,start_time, end_time )" +
                 "Values (?,?,?,?,?,?,?)";
@@ -83,13 +103,25 @@ public class BookingController {
 
             pst.execute();
 
-            sendEmailNotification(loggedInUser.email, "Your Parking has been confirmed for date: " + new_slot.getBooking_date() + " from " + new_slot.getStart_time() + " to " + new_slot.getEnd_time());
+            //sending success notification on user email
+            String mailBody = "Your Parking has been confirmed for date: " + new_slot.getBooking_date() + " from " + new_slot.getStart_time() + " to " + new_slot.getEnd_time();
+            String mailSubject = "Parking Booking Confirmation";
+            sendEmailNotification(loggedInUser.email, mailBody, mailSubject);
         } catch (SQLException ex){
             ex.printStackTrace();
         }
 
         return new_slot.getReference_id();
     }
+
+    /*
+     * Description: Update the booking time for a booking
+     *
+     * Parameters: booking reference_id, new start_time, new end_time
+     *
+     * Return: boolean status
+     *
+     */
 
     public boolean edit_booking_time(String booking_reference_id, LocalTime Start_time, LocalTime end_time) throws SQLException {
         String query1 = "Update "+tablename+" set start_time=? where reference_id='"+booking_reference_id+"'";
@@ -113,6 +145,14 @@ public class BookingController {
         return false;
     }
 
+    /*
+     * Description: Updates the booking date for a booking
+     *
+     * Parameters: booking reference id and new Date
+     *
+     * Return: Boolean status
+     *
+     */
     public boolean edit_booking_date(String booking_reference_id, LocalDate date) throws SQLException {
         String query = "Update "+tablename+" set date=? where reference_id='"+booking_reference_id+"'";
 
@@ -128,6 +168,14 @@ public class BookingController {
         return false;
     }
 
+    /*
+     * Description: Deletes a booking for the user
+     *
+     * Parameters: booking reference id
+     *
+     * Return: boolean status
+     *
+     */
     public boolean delete_booking(String booking_reference_id) throws SQLException {
         String query = "Delete from " + tablename + " Where reference_id='" + booking_reference_id + "'";
 
@@ -143,7 +191,15 @@ public class BookingController {
         return false;
     }
 
-    public boolean sendEmailNotification(String email_id, String text){
+    /*
+     * Description: Utility to send email
+     *
+     * Parameters: email_id, message
+     *
+     * Return: boolean status
+     *
+     */
+    public boolean sendEmailNotification(String email_id, String text, String subject) {
         final String username = "parkingpoolasdc@gmail.com";
         final String password = "abc@12345678";
 
@@ -168,7 +224,7 @@ public class BookingController {
                     Message.RecipientType.TO,
                     InternetAddress.parse(email_id)
             );
-            message.setSubject("Booking Confirmed with Parking Pool");
+            message.setSubject(subject);
             message.setText("Dear user, \n\n"
                     + text);
 

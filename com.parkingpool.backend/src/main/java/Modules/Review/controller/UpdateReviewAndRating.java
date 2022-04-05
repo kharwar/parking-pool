@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 public class UpdateReviewAndRating {
     public void updateReviewAndRating(Review review) {
-        int reviewId = review.review_id;
-        double ratings = review.ratings;
-        String reviewText = review.reviews;
+        int reviewId = review.getReview_id();
+        double ratings = review.getRatings();
+        String reviewText = review.getReviews();
 
         String query = "UPDATE reviews_and_ratings SET ratings=" + ratings + ", reviews=\"" + reviewText + "\" WHERE review_id = " + reviewId;
         try {

@@ -40,7 +40,7 @@ class BookingUtilitiesTest {
             Mockito.when(Constants.conn.prepareStatement(Mockito.anyString())).thenReturn(preparedStatement);
             Constants.setUser(Mockito.mock(User.class));
             Constants.loggedInUser.email = "motobha@gamil.com";
-            Mockito.when(Mockito.mock(BookingController.class).sendEmailNotification(Constants.loggedInUser.email, "test")).thenReturn(true);
+            Mockito.when(Mockito.mock(BookingController.class).sendEmailNotification(Constants.loggedInUser.email, "test", "Test Subject")).thenReturn(true);
             bu.book_slot(booking);
         });
     }

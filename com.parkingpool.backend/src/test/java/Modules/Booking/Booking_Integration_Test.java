@@ -57,6 +57,6 @@ class Booking_Integration_Test {
 
     @Test
     public void emailNotificationTest(){
-        Assertions.assertTrue(bu.sendEmailNotification("motobha@gmail.com", "Test message"));
+        Assertions.assertTrue(bu.sendEmailNotification("motobha@gmail.com", "Test message", "Test subject"));
     }
 }

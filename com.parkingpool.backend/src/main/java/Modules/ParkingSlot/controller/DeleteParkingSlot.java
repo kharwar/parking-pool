@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DeleteParkingSlot {
-    Statement stmt = Constants.stmt;
     private final ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO;
 
     public DeleteParkingSlot(ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO) {

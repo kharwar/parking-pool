@@ -4,6 +4,7 @@ import Modules.Review.controller.AddReviewsAndRatings;
 import Modules.Review.model.Review;
 import Modules.User.Utils.UserUtils;
 import Utils.Constants;
+import Utils.Scan;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,10 +48,10 @@ public class ReviewsAndRatingsView {
         int userId = Constants.loggedInUser.user_id;
 
         Constants.printAndSpeak("Enter the ID of the Parking Slot you want to review: ");
-        int parkingID = Integer.parseInt(sc.nextLine());
+        int parkingID = Integer.parseInt(Scan.nextLine());
 
         Constants.printAndSpeak("Enter the review: ");
-        String review = sc.nextLine();
+        String review = Scan.nextLine();
 
         Constants.printAndSpeak("Enter the ratings (0 to 5): ");
         double rating = acceptRating();
@@ -63,7 +64,7 @@ public class ReviewsAndRatingsView {
     }
 
     private double acceptRating(){
-        double rating = Double.parseDouble(sc.nextLine());
+        double rating = Double.parseDouble(Scan.nextLine());
         if(rating > 5 || rating < 0){
             Constants.printAndSpeak("Rating should be between 0 to 5. Please try again: ");
             return acceptRating();
