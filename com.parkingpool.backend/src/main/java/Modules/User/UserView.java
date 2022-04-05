@@ -4,6 +4,7 @@ import Modules.User.controller.LogIn;
 import Modules.User.controller.SignUp;
 import Modules.User.model.User;
 import Utils.Constants;
+import Utils.Scan;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -130,4 +131,36 @@ public class UserView{
     {
         return li.user;
     }
+
+    public static void userLoginView(Statement stmt, boolean IsLoggedIn, UserView uv) {
+        while(!IsLoggedIn) {
+            Constants.printAndSpeak("Please enter the numbers given below to perform the following action:\n1: SignUp\n2: Login");
+            Constants.printAndSpeak("Enter your command: ");
+            int inputt = Integer.parseInt(Scan.nextLine());
+            if(inputt==1) {
+                try {
+                    uv.signUp(stmt);
+                } catch (SQLException e) {
+                    Constants.printAndSpeak("Something went wrong, can not sign you up");
+                    e.printStackTrace();
+                }
+            }
+            else if(inputt==2)
+            {
+                try {
+                    if(uv.logIn(stmt))
+                    {
+                        IsLoggedIn =true;
+                    }
+                } catch (SQLException e) {
+                    Constants.printAndSpeak("Something went wrong, can not sign you in");
+                    e.printStackTrace();
+                }
+            }
+            else{
+                Constants.printAndSpeak("Please select correct input");
+            }
+        }
+    }
+
 }

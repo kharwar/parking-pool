@@ -1,4 +1,6 @@
 package Modules.User.controller;
+import Modules.User.Utils.Hash;
+
 import java.sql.*;
 
 public class SignUp{

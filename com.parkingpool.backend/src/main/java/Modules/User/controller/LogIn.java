@@ -1,6 +1,7 @@
 package Modules.User.controller;
 
 
+import Modules.User.Utils.Hash;
 import Modules.User.model.*;
 
 import java.sql.ResultSet;

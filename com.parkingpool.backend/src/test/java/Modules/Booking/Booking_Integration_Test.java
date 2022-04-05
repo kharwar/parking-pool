@@ -2,6 +2,9 @@ package Modules.Booking;
 
 import Modules.Booking.controller.BookingController;
 import Modules.Booking.model.Booking;
+import Modules.User.model.USER_TYPE;
+import Modules.User.model.User;
+import Utils.Constants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +20,11 @@ class Booking_Integration_Test {
     final String USER="CSCI5308_2_DEVINT_USER";
     final String PASS="phoo3saezeeGoop2";
 
+
+    Booking_Integration_Test() throws SQLException {
+        Constants.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        Constants.loggedInUser = new User("Test User", "test-user@yopmail.com", USER_TYPE.CUSTOMER, "Test Address", "test-unhashed-password", 999);
+    }
 
     BookingController bu = new BookingController();
 

@@ -18,7 +18,6 @@ import java.util.Properties;
 public class BookingController {
 
     String tablename = "booking";
-    Connection conn = Constants.conn;
     User loggedInUser = Constants.loggedInUser;
 
 
@@ -45,7 +44,7 @@ public class BookingController {
 
         String query = "Select * from " + tablename + " Where `"+key+"`="+Value;
 
-        Statement st = conn.createStatement();
+        Statement st = Constants.conn.createStatement();
         ResultSet rs = st.executeQuery(query);
 
         ArrayList<Booking>  b_list = new ArrayList<Booking>();
@@ -90,7 +89,7 @@ public class BookingController {
                 "Values (?,?,?,?,?,?,?)";
 
         try {
-            PreparedStatement pst = conn.prepareStatement(query);
+            PreparedStatement pst = Constants.conn.prepareStatement(query);
 
             pst.setString(1,new_slot.getReference_id());
             pst.setInt(2,new_slot.getUser_id());
@@ -105,7 +104,7 @@ public class BookingController {
             //sending success notification on user email
             String mailBody = "Your Parking has been confirmed for date: " + new_slot.getBooking_date() + " from " + new_slot.getStart_time() + " to " + new_slot.getEnd_time();
             String mailSubject = "Parking Booking Confirmation";
-            sendEmailNotification(loggedInUser.email, mailBody, mailSubject);
+            sendEmailNotification(Constants.loggedInUser.email, mailBody, mailSubject);
         } catch (SQLException ex){
             ex.printStackTrace();
         }
@@ -128,10 +127,10 @@ public class BookingController {
 
         try {
 
-            PreparedStatement st1 = conn.prepareStatement(query1);
+            PreparedStatement st1 = Constants.conn.prepareStatement(query1);
             st1.setTime(1, Time.valueOf(Start_time));
 
-            PreparedStatement st2 = conn.prepareStatement(query2);
+            PreparedStatement st2 = Constants.conn.prepareStatement(query2);
             st2.setTime(1, Time.valueOf(end_time));
 
             st1.execute();
@@ -156,7 +155,7 @@ public class BookingController {
         String query = "Update "+tablename+" set date=? where reference_id='"+booking_reference_id+"'";
 
         try {
-            PreparedStatement pst = conn.prepareStatement(query);
+            PreparedStatement pst = Constants.conn.prepareStatement(query);
             pst.setDate(1, Date.valueOf(date));
             pst.execute();
             return true;
@@ -179,7 +178,7 @@ public class BookingController {
         String query = "Delete from " + tablename + " Where reference_id='" + booking_reference_id + "'";
 
         try{
-            Statement st = conn.createStatement();
+            Statement st = Constants.conn.createStatement();
             st.execute(query);
             Constants.printAndSpeak("Booking cancelled Successfully");
             return true;
