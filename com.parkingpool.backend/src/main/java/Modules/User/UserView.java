@@ -24,26 +24,25 @@ public class UserView{
         SignUp su = new SignUp();
 
 
-        Scanner sc= new Scanner(System.in);
         Constants.printAndSpeak("Please enter your name: ");
-        name=sc.nextLine();
+        name=Scan.nextLine();
         Constants.printAndSpeak("Please enter your email: ");
-        email=sc.nextLine();
+        email=Scan.nextLine();
         Constants.printAndSpeak("Please enter 'c' for customer role, enter 'v' for vendor role : ");
-        rl=sc.nextLine().charAt(0);
+        rl=Scan.nextLine().charAt(0);
         while(rl!='v' && rl!='c')
         {
             Constants.printAndSpeak("Please Enter valid input : 'c' for customer role, Enter 'v' for vendor role : ");
-            rl=sc.nextLine().charAt(0);
+            rl=Scan.nextLine().charAt(0);
         }
         Constants.printAndSpeak("Please Enter your address: ");
-        address=sc.nextLine();
+        address=Scan.nextLine();
         Constants.printAndSpeak("Please Enter your password: ");
         if(System.console()!=null) {
             char[] passwordChars = System.console().readPassword();
             password = new String(passwordChars);
         }else{
-            password=sc.nextLine();
+            password=Scan.nextLine();
         }
 
         Constants.printAndSpeak("Please Reenter your password: ");
@@ -51,7 +50,7 @@ public class UserView{
             char[] passwordChars = System.console().readPassword();
             pswd = new String(passwordChars);
         }else{
-            pswd=sc.nextLine();
+            pswd=Scan.nextLine();
         }
 
         if(!password.equals(pswd))
@@ -86,23 +85,22 @@ public class UserView{
         String password;
         char rl;
 
-        Scanner sc= new Scanner(System.in);
         Constants.printAndSpeak("\nPlease Enter your email: ");
-        email=sc.nextLine();
+        email=Scan.nextLine();
         Constants.printAndSpeak("Please Enter your password: ");
         if(System.console()!=null) {
             char[] passwordChars = System.console().readPassword();
             password = new String(passwordChars);
         }else{
-            password=sc.nextLine();
+            password=Scan.nextLine();
         }
 
         Constants.printAndSpeak("Please Enter 'c' for customer role, Enter 'v' for vendor role, Enter 'a' for admin role : ");
-        rl=sc.nextLine().charAt(0);
+        rl=Scan.nextLine().charAt(0);
         while(rl!='v' && rl!='c' && rl!='a')
         {
             Constants.printAndSpeak("Please Enter valid input : 'c' for customer role, Enter 'v' for vendor role , Enter 'a' for admin role : ");
-            rl=sc.nextLine().charAt(0);
+            rl=Scan.nextLine().charAt(0);
         }
 
         SignUp su = new SignUp();

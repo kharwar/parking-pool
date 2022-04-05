@@ -6,6 +6,7 @@ import Modules.ParkingSlot.Utils.ParkingSlotUtils;
 import Modules.ParkingSlot.model.ParkingSlot;
 import Utils.Constants;
 import Utils.GoogleMap;
+import Utils.Scan;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,14 +15,13 @@ import java.util.Scanner;
 
 public class BookingView {
     ParkingSlotUtils parkingSlotUtils = new ParkingSlotUtils(Constants.parkingSlotQueryBuilderDAO);
-    Scanner sc = Constants.sc;
     BookingController bookingController = new BookingController();
     public void displayModifyBookingMenu() throws SQLException {
         Constants.printAndSpeak("Enter the following numbers to access the corresponding item: \n1. Delete a Booking.\n2. Go Back\nEnter your command: ");
-        switch (Integer.parseInt(sc.nextLine())) {
+        switch (Integer.parseInt(Scan.nextLine())) {
             case 1:
                 Constants.printAndSpeak("Enter the booking ID you want to delete: ");
-                String modifyBookingId = sc.nextLine();
+                String modifyBookingId = Scan.nextLine();
                 bookingController.delete_booking(modifyBookingId);
                 break;
             default:

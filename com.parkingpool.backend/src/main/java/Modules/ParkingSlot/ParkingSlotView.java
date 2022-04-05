@@ -17,6 +17,7 @@ import Modules.User.model.USER_TYPE;
 import Modules.User.model.User;
 import Utils.Constants;
 import Utils.GoogleMap;
+import Utils.Scan;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -27,7 +28,6 @@ import java.util.Scanner;
 
 public class ParkingSlotView {
     User loggedInUser;
-    Scanner sc = Constants.sc;
     Statement stmt = Constants.stmt;
     ParkingSlotQueryBuilderDAO parkingSlotQueryBuilderDAO = ParkingSlotQueryBuilder.getInstance();
 
@@ -62,7 +62,7 @@ public class ParkingSlotView {
     private boolean displayVendorMenu() {
         Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: Add Parking Slot.\n2: View My Parking Slots.\n3: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
-        int input = Integer.parseInt(sc.nextLine());
+        int input = Integer.parseInt(Scan.nextLine());
         switch (input) {
             case 1:
                 AddParkingSlot addParkingSlot = new AddParkingSlot(parkingSlotQueryBuilderDAO);
@@ -93,35 +93,34 @@ public class ParkingSlotView {
     public boolean displayCustomerMenu() throws SQLException, ParseException {
         Constants.printAndSpeak("Enter the following numbers to access the corresponding item:\n1: View Parking Slots.\n2. View My Bookings\n3. Raise a ticket. \n4: Exit ParkingPool.\nEnter your command: ");
         boolean toContinue = true;
-        int input = Integer.parseInt(sc.nextLine());
+        int input = Integer.parseInt(Scan.nextLine());
         switch (input) {
             case 1:
                 FindParkingSlots findParkingSlots = new FindParkingSlots();
                 Constants.printAndSpeak("Enter the Google Maps URL of the location you want to find nearby parking locations to: ");
-                Map<String, String> map = GoogleMap.parseUrl(sc.nextLine().trim());
+                Map<String, String> map = GoogleMap.parseUrl(Scan.nextLine().trim());
 
                 double longitude = Double.parseDouble(map.get("longitude"));
                 double latitude = Double.parseDouble(map.get("latitude"));
 
                 Constants.printAndSpeak("Enter the date (yyyy-mm-dd) you want to find the Parking Slot for: ");
-                Date date = Date.valueOf(sc.nextLine());
-                //Date date = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+                Date date = Date.valueOf(Scan.nextLine());
                 Constants.printAndSpeak("Enter the time (hh:mm:ss) you want to book your slot for: ");
-                LocalTime startTime = LocalTime.parse(sc.nextLine());
+                LocalTime startTime = LocalTime.parse(Scan.nextLine());
                 Constants.printAndSpeak("Enter the time (hh:mm:ss) you want to end your booking: ");
-                LocalTime endTime = LocalTime.parse(sc.nextLine());
+                LocalTime endTime = LocalTime.parse(Scan.nextLine());
                 Constants.printAndSpeak("Do you require the Parking Slot to be handicapped accessible? Yes or No: ");
-                boolean handicappedAccessible = sc.nextLine().toLowerCase().charAt(0) == 'y';
+                boolean handicappedAccessible = Scan.nextLine().toLowerCase().charAt(0) == 'y';
                 ArrayList<ParkingSlot> foundParkingSlots = findParkingSlots.findAvailableParkingSlots(longitude, latitude, date, startTime, endTime, handicappedAccessible);
 
                 ParkingSlotUtils.viewParkingSlots(foundParkingSlots);
                 Constants.printAndSpeak("Enter the following numbers to access the corresponding item: \n1. Book a Parking Slot from above\n2. Write a review.\n3. Sort according to rate\n4. Sort according to distance from elevator.\n5. Go Back\nEnter your command: ");
-                int bookInput = Integer.parseInt(sc.nextLine());
+                int bookInput = Integer.parseInt(Scan.nextLine());
 
                 switch (bookInput) {
                     case 1:
                         Constants.printAndSpeak("Enter the selected Parking ID: ");
-                        int parkingId = Integer.parseInt(sc.nextLine());
+                        int parkingId = Integer.parseInt(Scan.nextLine());
                         BookAParkingSlot(parkingId, date, startTime, endTime);
                         break;
                     case 2:
@@ -167,7 +166,7 @@ public class ParkingSlotView {
         AnalyticsView analyticsView = new AnalyticsView();
         boolean toContinue = true;
         Constants.printAndSpeak("Enter the following number to access the corresponding item:\n1. Show Analysis of the data for ParkingPool\n2. Generate a Spreadsheet for the analytics\n3. Exit ParkingPool");
-        int input = Integer.parseInt(sc.nextLine());
+        int input = Integer.parseInt(Scan.nextLine());
         switch (input) {
             case 1:
                 analyticsView.showAnalytics();
@@ -209,13 +208,13 @@ public class ParkingSlotView {
                     case 1:
                         DeleteParkingSlot deleteParkingSlot = new DeleteParkingSlot(parkingSlotQueryBuilderDAO);
                         Constants.printAndSpeak("Enter the Parking Slot ID you want to delete: ");
-                        deleteParkingSlot.deleteParkingSlot(Integer.parseInt(sc.nextLine()), loggedInUser.user_id);
+                        deleteParkingSlot.deleteParkingSlot(Integer.parseInt(Scan.nextLine()), loggedInUser.user_id);
                         toContinue = true;
                         break;
                     case 2:
                         ReviewsAndRatingsView reviewsAndRatingsView = new ReviewsAndRatingsView();
                         Constants.printAndSpeak("Enter the Parking Slot ID you want to view reviews for: ");
-                        reviewsAndRatingsView.displayReviewByParkingId(Integer.parseInt(sc.nextLine()));
+                        reviewsAndRatingsView.displayReviewByParkingId(Integer.parseInt(Scan.nextLine()));
                         toContinue = true;
                         break;
                     default:
@@ -230,13 +229,13 @@ public class ParkingSlotView {
     //Displays Edit Parking Slot Menu of the logged in user
     private int displayEditParkingSlotMenu() {
         Constants.printAndSpeak("*** My Parking Slots ***\n1. Delete a Parking Slot.\n2. View Reviews.\n3. Go back.\nEnter your command: ");
-        return Integer.parseInt(sc.nextLine().trim());
+        return Integer.parseInt(Scan.nextLine().trim());
     }
 
     // This method will fetch all the parking slot details from the user and return a ParkingSlot.
     private ParkingSlot addParkingSlotDetails() {
         Constants.printAndSpeak("Enter Google Map URL of the location: ");
-        String googleMap = sc.nextLine().trim();
+        String googleMap = Scan.nextLine().trim();
 
         Map<String, String> parsedGoogleMap = GoogleMap.parseUrl(googleMap);
 
@@ -245,22 +244,22 @@ public class ParkingSlotView {
         double latitude = Double.parseDouble(parsedGoogleMap.get("latitude"));
 
         Constants.printAndSpeak("\nEnter the distance from elevator(enter 0 if there is no elevator): ");
-        int distance_from_elevator = Integer.parseInt(sc.nextLine().trim());
+        int distance_from_elevator = Integer.parseInt(Scan.nextLine().trim());
 
         Constants.printAndSpeak("\nIs it for handicap? Yes or No: ");
-        int is_handicap = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().startsWith("Y") ? '1' : '0'));
+        int is_handicap = Integer.parseInt(String.valueOf(Scan.nextLine().toUpperCase().startsWith("Y") ? '1' : '0'));
 
         Constants.printAndSpeak("\nIs the parking on street? Yes or No: ");
-        int is_on_street = Integer.parseInt(String.valueOf(sc.nextLine().toUpperCase().startsWith("Y") ? '1' : '0'));
+        int is_on_street = Integer.parseInt(String.valueOf(Scan.nextLine().toUpperCase().startsWith("Y") ? '1' : '0'));
 
         Constants.printAndSpeak("\nEnter the hourly rate of the parking slot: ");
-        float hourly_rate = Float.parseFloat(sc.nextLine().trim());
+        float hourly_rate = Float.parseFloat(Scan.nextLine().trim());
 
         Constants.printAndSpeak("\nEnter the starting hour (hh:mm:ss) of the Parking Slot: ");
-        Time start_time = Time.valueOf(sc.nextLine().trim());
+        Time start_time = Time.valueOf(Scan.nextLine().trim());
 
         Constants.printAndSpeak("\nEnter the ending hour (hh:mm:ss) of the Parking Slot: ");
-        Time end_time = Time.valueOf(sc.nextLine().trim());
+        Time end_time = Time.valueOf(Scan.nextLine().trim());
 
         int owner_user_id = loggedInUser.user_id;
 
