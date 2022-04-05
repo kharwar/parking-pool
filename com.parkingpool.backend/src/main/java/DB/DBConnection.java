@@ -10,9 +10,9 @@ public class DBConnection implements DBInterface
     private Connection connection = null;
     private static DBConnection dbConnection;
 
-    final String DB_URL = "jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_2_DEVINT";
-    final String USER="CSCI5308_2_DEVINT_USER";
-    final String PASS="phoo3saezeeGoop2";
+    final String DB_URL = "jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_2_PRODUCTION";
+    final String USER="CSCI5308_2_PRODUCTION_USER";
+    final String PASS="aetee7Eiki8upeeb";
 
     private DBConnection(){
         //singleton purpose
