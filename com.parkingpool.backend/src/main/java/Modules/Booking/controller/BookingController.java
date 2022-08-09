@@ -198,8 +198,8 @@ public class BookingController {
      *
      */
     public boolean sendEmailNotification(String email_id, String text, String subject) {
-        final String username = "parkingpoolasdc@gmail.com";
-        final String password = "abc@12345678";
+        final String username = "";
+        final String password = "";
 
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
