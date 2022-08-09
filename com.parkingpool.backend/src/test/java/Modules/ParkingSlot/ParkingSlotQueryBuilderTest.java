@@ -10,7 +10,7 @@ import java.sql.Time;
 public class ParkingSlotQueryBuilderTest {
     @Test
     @DisplayName("AddParkingSlotQueryBuilder Test")
-    public void testAddParkingSlotQueryBuilder(){
+    public void testAddParkingSlotQueryBuilder() {
         final int distance_from_elevator = 0;
         final String address = "6225 University Ave, Halifax, NS B3H 4R2";
         final int is_handicap = 1;
@@ -29,7 +29,7 @@ public class ParkingSlotQueryBuilderTest {
     }
 
     @Test
-    public void testFindallSlotsqueryBuilder(){
+    public void testFindallSlotsqueryBuilder() {
         final ParkingSlotQueryBuilder parkingSlotQueryBuilder = ParkingSlotQueryBuilder.getInstance();
         final String actualQuery = parkingSlotQueryBuilder.FindAllParkingSlotsQueryBuilder();
         final String expectedquery = "SELECT * from ParkingSlot";
@@ -37,13 +37,12 @@ public class ParkingSlotQueryBuilderTest {
     }
 
     @Test
-    public void testDeleteParkingSlot(){
+    public void testDeleteParkingSlot() {
         final ParkingSlotQueryBuilder parkingSlotQueryBuilder = ParkingSlotQueryBuilder.getInstance();
-        final String actualQuery = parkingSlotQueryBuilder.DeleteParkingSlotQueryBuilder(2,6);
+        final String actualQuery = parkingSlotQueryBuilder.DeleteParkingSlotQueryBuilder(2, 6);
         final String expectedQuery = "DELETE FROM ParkingSlot WHERE id=2 AND owner_user_id=6";
-        Assertions.assertEquals(actualQuery,expectedQuery);
+        Assertions.assertEquals(actualQuery, expectedQuery);
     }
-
+    
+    
 }
-
-
